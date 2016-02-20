@@ -28,23 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.grpGameUnit = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtWidth_GameUnit = new System.Windows.Forms.TextBox();
-            this.txtHeight_GameUnit = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtHeight_GameUnit = new System.Windows.Forms.TextBox();
+            this.txtWidth_GameUnit = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.grpGameBoard = new System.Windows.Forms.GroupBox();
+            this.optColorMode = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtHeight_GameBoard = new System.Windows.Forms.TextBox();
             this.txtWidth_GameBoard = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.optColorMode = new System.Windows.Forms.ComboBox();
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
@@ -55,11 +56,17 @@
             this.lblZoom = new System.Windows.Forms.Label();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.timerGameTick = new System.Windows.Forms.Timer(this.components);
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblSpeed = new System.Windows.Forms.Label();
+            this.trkSpeed = new System.Windows.Forms.TrackBar();
             this.grpGameUnit.SuspendLayout();
             this.grpGameBoard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -87,45 +94,15 @@
             this.grpGameUnit.TabStop = false;
             this.grpGameUnit.Text = "Game Unit";
             // 
-            // label2
+            // label5
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 33);
-            this.label2.Margin = new System.Windows.Forms.Padding(3, 10, 0, 10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 20);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Width:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 73);
-            this.label3.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 20);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Height:";
-            // 
-            // txtWidth_GameUnit
-            // 
-            this.txtWidth_GameUnit.Location = new System.Drawing.Point(69, 30);
-            this.txtWidth_GameUnit.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.txtWidth_GameUnit.Name = "txtWidth_GameUnit";
-            this.txtWidth_GameUnit.Size = new System.Drawing.Size(47, 26);
-            this.txtWidth_GameUnit.TabIndex = 3;
-            this.txtWidth_GameUnit.Text = "10";
-            this.txtWidth_GameUnit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtHeight_GameUnit
-            // 
-            this.txtHeight_GameUnit.Location = new System.Drawing.Point(69, 70);
-            this.txtHeight_GameUnit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtHeight_GameUnit.Name = "txtHeight_GameUnit";
-            this.txtHeight_GameUnit.Size = new System.Drawing.Size(47, 26);
-            this.txtHeight_GameUnit.TabIndex = 4;
-            this.txtHeight_GameUnit.Text = "10";
-            this.txtHeight_GameUnit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(116, 73);
+            this.label5.Margin = new System.Windows.Forms.Padding(0, 10, 3, 10);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 20);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "cells";
             // 
             // label4
             // 
@@ -137,15 +114,45 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "cells";
             // 
-            // label5
+            // txtHeight_GameUnit
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(116, 73);
-            this.label5.Margin = new System.Windows.Forms.Padding(0, 10, 3, 10);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 20);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "cells";
+            this.txtHeight_GameUnit.Location = new System.Drawing.Point(69, 70);
+            this.txtHeight_GameUnit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtHeight_GameUnit.Name = "txtHeight_GameUnit";
+            this.txtHeight_GameUnit.Size = new System.Drawing.Size(47, 26);
+            this.txtHeight_GameUnit.TabIndex = 4;
+            this.txtHeight_GameUnit.Text = "10";
+            this.txtHeight_GameUnit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtWidth_GameUnit
+            // 
+            this.txtWidth_GameUnit.Location = new System.Drawing.Point(69, 30);
+            this.txtWidth_GameUnit.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.txtWidth_GameUnit.Name = "txtWidth_GameUnit";
+            this.txtWidth_GameUnit.Size = new System.Drawing.Size(47, 26);
+            this.txtWidth_GameUnit.TabIndex = 3;
+            this.txtWidth_GameUnit.Text = "10";
+            this.txtWidth_GameUnit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 73);
+            this.label3.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 20);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Height:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 33);
+            this.label2.Margin = new System.Windows.Forms.Padding(3, 10, 0, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 20);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Width:";
             // 
             // grpGameBoard
             // 
@@ -165,6 +172,27 @@
             this.grpGameBoard.TabIndex = 2;
             this.grpGameBoard.TabStop = false;
             this.grpGameBoard.Text = "Game Board";
+            // 
+            // optColorMode
+            // 
+            this.optColorMode.FormattingEnabled = true;
+            this.optColorMode.Items.AddRange(new object[] {
+            "Black & White"});
+            this.optColorMode.Location = new System.Drawing.Point(75, 110);
+            this.optColorMode.Name = "optColorMode";
+            this.optColorMode.Size = new System.Drawing.Size(156, 28);
+            this.optColorMode.TabIndex = 8;
+            this.optColorMode.Text = "Black & White";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(15, 113);
+            this.label10.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(54, 20);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "Color:";
             // 
             // label6
             // 
@@ -226,30 +254,9 @@
             this.label9.TabIndex = 0;
             this.label9.Text = "Width:";
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(15, 113);
-            this.label10.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(54, 20);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "Color:";
-            // 
-            // optColorMode
-            // 
-            this.optColorMode.FormattingEnabled = true;
-            this.optColorMode.Items.AddRange(new object[] {
-            "Black & White"});
-            this.optColorMode.Location = new System.Drawing.Point(75, 110);
-            this.optColorMode.Name = "optColorMode";
-            this.optColorMode.Size = new System.Drawing.Size(156, 28);
-            this.optColorMode.TabIndex = 8;
-            this.optColorMode.Text = "Black & White";
-            // 
             // btnPlay
             // 
-            this.btnPlay.Location = new System.Drawing.Point(15, 325);
+            this.btnPlay.Location = new System.Drawing.Point(15, 297);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(75, 38);
             this.btnPlay.TabIndex = 9;
@@ -260,7 +267,7 @@
             // btnStop
             // 
             this.btnStop.Enabled = false;
-            this.btnStop.Location = new System.Drawing.Point(96, 325);
+            this.btnStop.Location = new System.Drawing.Point(96, 297);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 38);
             this.btnStop.TabIndex = 10;
@@ -271,7 +278,7 @@
             // btnQuit
             // 
             this.btnQuit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnQuit.Location = new System.Drawing.Point(177, 325);
+            this.btnQuit.Location = new System.Drawing.Point(177, 297);
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(75, 38);
             this.btnQuit.TabIndex = 11;
@@ -282,7 +289,7 @@
             // btnEditField
             // 
             this.btnEditField.Enabled = false;
-            this.btnEditField.Location = new System.Drawing.Point(15, 369);
+            this.btnEditField.Location = new System.Drawing.Point(15, 341);
             this.btnEditField.Name = "btnEditField";
             this.btnEditField.Size = new System.Drawing.Size(237, 38);
             this.btnEditField.TabIndex = 12;
@@ -302,13 +309,14 @@
             // 
             // trkZoom
             // 
+            this.trkZoom.AutoSize = false;
             this.trkZoom.LargeChange = 3;
             this.trkZoom.Location = new System.Drawing.Point(2, 25);
             this.trkZoom.Minimum = 1;
             this.trkZoom.Name = "trkZoom";
-            this.trkZoom.Size = new System.Drawing.Size(189, 56);
+            this.trkZoom.Size = new System.Drawing.Size(189, 34);
             this.trkZoom.TabIndex = 14;
-            this.trkZoom.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.trkZoom.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.trkZoom.Value = 10;
             this.trkZoom.Scroll += new System.EventHandler(this.trkZoom_Scroll);
             // 
@@ -316,9 +324,9 @@
             // 
             this.groupBox1.Controls.Add(this.lblZoom);
             this.groupBox1.Controls.Add(this.trkZoom);
-            this.groupBox1.Location = new System.Drawing.Point(15, 437);
+            this.groupBox1.Location = new System.Drawing.Point(15, 385);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(237, 93);
+            this.groupBox1.Size = new System.Drawing.Size(237, 68);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Zoom";
@@ -328,7 +336,7 @@
             this.lblZoom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblZoom.Location = new System.Drawing.Point(188, 25);
             this.lblZoom.Name = "lblZoom";
-            this.lblZoom.Size = new System.Drawing.Size(43, 50);
+            this.lblZoom.Size = new System.Drawing.Size(43, 34);
             this.lblZoom.TabIndex = 15;
             this.lblZoom.Text = "x10";
             this.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -350,6 +358,45 @@
             this.hScrollBar1.Size = new System.Drawing.Size(500, 18);
             this.hScrollBar1.TabIndex = 17;
             // 
+            // timerGameTick
+            // 
+            this.timerGameTick.Interval = 200;
+            this.timerGameTick.Tick += new System.EventHandler(this.timerGameTick_Tick);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lblSpeed);
+            this.groupBox2.Controls.Add(this.trkSpeed);
+            this.groupBox2.Location = new System.Drawing.Point(15, 459);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(237, 68);
+            this.groupBox2.TabIndex = 18;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Speed";
+            // 
+            // lblSpeed
+            // 
+            this.lblSpeed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblSpeed.Location = new System.Drawing.Point(188, 25);
+            this.lblSpeed.Name = "lblSpeed";
+            this.lblSpeed.Size = new System.Drawing.Size(43, 34);
+            this.lblSpeed.TabIndex = 15;
+            this.lblSpeed.Text = "x99";
+            this.lblSpeed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // trkSpeed
+            // 
+            this.trkSpeed.AutoSize = false;
+            this.trkSpeed.LargeChange = 3;
+            this.trkSpeed.Location = new System.Drawing.Point(2, 25);
+            this.trkSpeed.Maximum = 14;
+            this.trkSpeed.Name = "trkSpeed";
+            this.trkSpeed.Size = new System.Drawing.Size(189, 34);
+            this.trkSpeed.TabIndex = 14;
+            this.trkSpeed.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trkSpeed.Value = 5;
+            this.trkSpeed.Scroll += new System.EventHandler(this.trkSpeed_Scroll);
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnPlay;
@@ -357,6 +404,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnQuit;
             this.ClientSize = new System.Drawing.Size(782, 540);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.groupBox1);
@@ -379,7 +427,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.picOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -414,6 +463,10 @@
         private System.Windows.Forms.Label lblZoom;
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.Timer timerGameTick;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lblSpeed;
+        private System.Windows.Forms.TrackBar trkSpeed;
     }
 }
 

@@ -22,6 +22,6 @@ namespace ConwaysGameOfLife
         T GetCorner_TopRight();
         T GetCorner_BottomLeft();
         T GetCorner_BottomRight();
-        void RegisterNeighbor(Location location, IGameUnit<T> neighbor);
+        void RegisterNeighbor(IGameUnit<T> neighbor, Location location);
     }
 }

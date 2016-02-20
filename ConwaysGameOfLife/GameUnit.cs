@@ -37,10 +37,15 @@ namespace ConwaysGameOfLife
             nextboard = new bool[width, height];
 
             Random rand = new Random();
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                    prevboard[x, y] = (x % 2) == (y % 2);
-            //prevboard[x, y] = (rand.Next(10) < 3); // 30% chance cell starts alive
+            //for (int x = 0; x < width; x++)
+            //{
+            //    for (int y = 0; y < height; y++)
+            //    {
+            //        prevboard[x, y] = (x % 2) == (y % 2);
+            //        //prevboard[x, y] = (rand.Next(10) < 3); // 30% chance cell starts alive
+            //    }
+            //}
+            DrawGlider(rand.Next(0, 8), rand.Next(0, 8));
 
             Neighbor_Left = NoNeighborsEdgeLR;
             Neighbor_Top = NoNeighborsEdgeTB;
@@ -50,6 +55,15 @@ namespace ConwaysGameOfLife
             Neighbor_TopRight = NoNeighborsCorner;
             Neighbor_BottomLeft = NoNeighborsCorner;
             Neighbor_BottomRight = NoNeighborsCorner;
+        }
+
+        private void DrawGlider( int x, int y )
+        {
+            prevboard[x, y + 1] = true;
+            prevboard[x + 1, y + 2] = true;
+            prevboard[x + 2, y] = true;
+            prevboard[x + 2, y + 1] = true;
+            prevboard[x + 2, y + 2] = true;
         }
 
         public Image Draw(Color foreground, Color background, int zoomFactor)
@@ -78,7 +92,7 @@ namespace ConwaysGameOfLife
             return result;
         }
 
-        public void RegisterNeighbor(Location edge, IGameUnit<bool> neighbor)
+        public void RegisterNeighbor(IGameUnit<bool> neighbor, Location edge)
         {
             switch (edge)
             {
@@ -115,7 +129,7 @@ namespace ConwaysGameOfLife
         {
             bool[] result = new bool[Height];
             for (int y = 0; y < Height; y++)
-                result[y] = prevboard[1, y];
+                result[y] = prevboard[0, y];
             return result;
         }
 
@@ -123,7 +137,7 @@ namespace ConwaysGameOfLife
         {
             bool[] result = new bool[Width];
             for (int x = 0; x < Width; x++)
-                result[x] = prevboard[x, 1];
+                result[x] = prevboard[x, 0];
             return result;
         }
 
@@ -131,7 +145,7 @@ namespace ConwaysGameOfLife
         {
             bool[] result = new bool[Height];
             for (int y = 0; y < Height; y++)
-                result[y] = prevboard[Width, y];
+                result[y] = prevboard[Width - 1, y];
             return result;
         }
 
@@ -139,28 +153,28 @@ namespace ConwaysGameOfLife
         {
             bool[] result = new bool[Width];
             for (int x = 0; x < Width; x++)
-                result[x] = prevboard[x, Height];
+                result[x] = prevboard[x, Height - 1];
             return result;
         }
 
         public bool GetCorner_TopLeft()
         {
-            return prevboard[1, 1];
+            return prevboard[0, 0];
         }
 
         public bool GetCorner_TopRight()
         {
-            return prevboard[Width, 1];
+            return prevboard[Width - 1, 0];
         }
 
         public bool GetCorner_BottomLeft()
         {
-            return prevboard[1, Height];
+            return prevboard[0, Height - 1];
         }
 
         public bool GetCorner_BottomRight()
         {
-            return prevboard[Width, Height];
+            return prevboard[Width - 1, Height - 1];
         }
 
         public void CalculateNextTurn()
@@ -191,7 +205,7 @@ namespace ConwaysGameOfLife
                 if (neighborEdge[x] == false)
                     continue;
                 for (int nx = 0; nx < 3; nx++)
-                    neighbors[x + nx, Height + 1]++;
+                    neighbors[x + nx, Height]++;
             }
             neighborEdge = Neighbor_Left();
             for (int y = 0; y < Height; y++)
@@ -207,16 +221,16 @@ namespace ConwaysGameOfLife
                 if (neighborEdge[y] == false)
                     continue;
                 for (int ny = 0; ny < 3; ny++)
-                    neighbors[Width + 1, y + ny]++;
+                    neighbors[Width, y + ny]++;
             }
             if (Neighbor_TopLeft())
                 neighbors[1, 1]++;
             if (Neighbor_TopRight())
-                neighbors[Width + 1, 1]++;
+                neighbors[Width, 1]++;
             if (Neighbor_BottomLeft())
-                neighbors[1, Height + 1]++;
+                neighbors[1, Height]++;
             if (Neighbor_BottomRight())
-                neighbors[Width + 1, Height + 1]++;
+                neighbors[Width, Height]++;
 
             byte neighborCount;
             for (int x = 0; x < Width; x++)
