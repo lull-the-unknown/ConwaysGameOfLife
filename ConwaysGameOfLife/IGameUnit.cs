@@ -11,7 +11,7 @@ namespace ConwaysGameOfLife
 
     interface IGameUnit<T>
     {
-        Image Draw( Color foreground, Color background, int zoomFactor );
+        Image Draw( Color foreground, Color background );
         void CalculateNextTurn();
         void CommitTurn();
         T[] GetEdge_Left();

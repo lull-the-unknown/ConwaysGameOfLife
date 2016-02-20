@@ -54,12 +54,11 @@
             this.trkZoom = new System.Windows.Forms.TrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblZoom = new System.Windows.Forms.Label();
-            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.timerGameTick = new System.Windows.Forms.Timer(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblSpeed = new System.Windows.Forms.Label();
             this.trkSpeed = new System.Windows.Forms.TrackBar();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.grpGameUnit.SuspendLayout();
             this.grpGameBoard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOut)).BeginInit();
@@ -67,6 +66,7 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -299,11 +299,11 @@
             // picOut
             // 
             this.picOut.BackColor = System.Drawing.Color.White;
-            this.picOut.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picOut.Location = new System.Drawing.Point(258, 12);
+            this.picOut.Location = new System.Drawing.Point(0, 0);
             this.picOut.Margin = new System.Windows.Forms.Padding(0);
             this.picOut.Name = "picOut";
-            this.picOut.Size = new System.Drawing.Size(500, 500);
+            this.picOut.Size = new System.Drawing.Size(100, 100);
+            this.picOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.picOut.TabIndex = 13;
             this.picOut.TabStop = false;
             // 
@@ -341,23 +341,6 @@
             this.lblZoom.Text = "x10";
             this.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // vScrollBar1
-            // 
-            this.vScrollBar1.Enabled = false;
-            this.vScrollBar1.LargeChange = 5;
-            this.vScrollBar1.Location = new System.Drawing.Point(758, 12);
-            this.vScrollBar1.Maximum = 10;
-            this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(21, 500);
-            this.vScrollBar1.TabIndex = 16;
-            // 
-            // hScrollBar1
-            // 
-            this.hScrollBar1.Location = new System.Drawing.Point(258, 512);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(500, 18);
-            this.hScrollBar1.TabIndex = 17;
-            // 
             // timerGameTick
             // 
             this.timerGameTick.Interval = 200;
@@ -389,7 +372,7 @@
             this.trkSpeed.AutoSize = false;
             this.trkSpeed.LargeChange = 3;
             this.trkSpeed.Location = new System.Drawing.Point(2, 25);
-            this.trkSpeed.Maximum = 14;
+            this.trkSpeed.Maximum = 15;
             this.trkSpeed.Name = "trkSpeed";
             this.trkSpeed.Size = new System.Drawing.Size(189, 34);
             this.trkSpeed.TabIndex = 14;
@@ -397,18 +380,28 @@
             this.trkSpeed.Value = 5;
             this.trkSpeed.Scroll += new System.EventHandler(this.trkSpeed_Scroll);
             // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.picOut);
+            this.panel1.Location = new System.Drawing.Point(258, 27);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(500, 500);
+            this.panel1.TabIndex = 19;
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnPlay;
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.CancelButton = this.btnQuit;
-            this.ClientSize = new System.Drawing.Size(782, 540);
+            this.ClientSize = new System.Drawing.Size(766, 532);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.hScrollBar1);
-            this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.picOut);
             this.Controls.Add(this.btnEditField);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnStop);
@@ -420,6 +413,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.ClientSizeChanged += new System.EventHandler(this.Form1_ClientSizeChanged);
             this.grpGameUnit.ResumeLayout(false);
             this.grpGameUnit.PerformLayout();
             this.grpGameBoard.ResumeLayout(false);
@@ -429,6 +423,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -461,12 +457,11 @@
         private System.Windows.Forms.TrackBar trkZoom;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblZoom;
-        private System.Windows.Forms.VScrollBar vScrollBar1;
-        private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.Timer timerGameTick;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.TrackBar trkSpeed;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

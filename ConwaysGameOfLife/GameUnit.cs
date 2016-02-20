@@ -45,7 +45,7 @@ namespace ConwaysGameOfLife
             //        //prevboard[x, y] = (rand.Next(10) < 3); // 30% chance cell starts alive
             //    }
             //}
-            DrawGlider(rand.Next(0, 8), rand.Next(0, 8));
+            DrawGlider(rand.Next(0, Width-2), rand.Next(0, Height-2), rand.Next(0, 4));
 
             Neighbor_Left = NoNeighborsEdgeLR;
             Neighbor_Top = NoNeighborsEdgeTB;
@@ -57,36 +57,54 @@ namespace ConwaysGameOfLife
             Neighbor_BottomRight = NoNeighborsCorner;
         }
 
-        private void DrawGlider( int x, int y )
+        private void DrawGlider(int x, int y, int orientation)
         {
-            prevboard[x, y + 1] = true;
-            prevboard[x + 1, y + 2] = true;
-            prevboard[x + 2, y] = true;
-            prevboard[x + 2, y + 1] = true;
-            prevboard[x + 2, y + 2] = true;
+            switch (orientation)
+            {
+                case 0:
+                    prevboard[x, y + 1] = true;
+                    prevboard[x + 1, y + 2] = true;
+                    prevboard[x + 2, y] = true;
+                    prevboard[x + 2, y + 1] = true;
+                    prevboard[x + 2, y + 2] = true;
+                    break;
+                case 1:
+                    prevboard[x, y + 1] = true;
+                    prevboard[x, y + 2] = true;
+                    prevboard[x + 1, y] = true;
+                    prevboard[x + 1, y + 2] = true;
+                    prevboard[x + 2, y + 2] = true;
+                    break;
+                case 2:
+                    prevboard[x, y] = true;
+                    prevboard[x, y + 1] = true;
+                    prevboard[x, y + 2] = true;
+                    prevboard[x + 1, y] = true;
+                    prevboard[x + 2, y + 1] = true;
+                    break;
+                default:
+                    prevboard[x, y] = true;
+                    prevboard[x + 1, y] = true;
+                    prevboard[x + 1, y + 2] = true;
+                    prevboard[x + 2, y] = true;
+                    prevboard[x + 2, y + 1] = true;
+                    break;
+            }
         }
 
-        public Image Draw(Color foreground, Color background, int zoomFactor)
+        public Image Draw(Color foreground, Color background)
         {
-            Bitmap result = new Bitmap(Width * zoomFactor, Height * zoomFactor, PixelFormat.Format32bppArgb);
+            Bitmap result = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
 
             // for using bitmapdata to write pixels efficiently:
             //    https://msdn.microsoft.com/en-us/library/5ey6h79d(v=vs.110).aspx
             //BitmapData data = result.LockBits( new Rectangle(0, 0, result.Width, result.Height), 
             //                                   ImageLockMode.WriteOnly, 
             //                                   result.PixelFormat);
-
-            Color selected;
+            
             for (int x = 0; x < Width; x++)
-            {
                 for (int y = 0; y < Height; y++)
-                {
-                    selected = prevboard[x, y] ? foreground : background;
-                    for (int px = 0, pixelx = x * zoomFactor; px < zoomFactor; px++, pixelx++)
-                        for (int py = 0, pixely = y * zoomFactor; py < zoomFactor; py++, pixely++)
-                            result.SetPixel(pixelx, pixely, selected);
-                }
-            }
+                    result.SetPixel(x, y, prevboard[x, y] ? foreground : background);
 
             //result.UnlockBits(data);
             return result;
@@ -240,7 +258,7 @@ namespace ConwaysGameOfLife
                     neighborCount = neighbors[x + 1, y + 1];
                     if (neighborCount == 3)
                         nextboard[x, y] = true;
-                    else if ( (neighborCount == 4) && prevboard[x,y])
+                    else if ((neighborCount == 4) && prevboard[x, y])
                         nextboard[x, y] = true;
                     else
                         nextboard[x, y] = false;
