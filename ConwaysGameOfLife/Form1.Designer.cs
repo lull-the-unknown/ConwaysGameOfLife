@@ -49,7 +49,7 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
             this.btnEditField = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picOut = new System.Windows.Forms.PictureBox();
             this.trkZoom = new System.Windows.Forms.TrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblZoom = new System.Windows.Forms.Label();
@@ -57,7 +57,7 @@
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.grpGameUnit.SuspendLayout();
             this.grpGameBoard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -289,16 +289,16 @@
             this.btnEditField.Text = "Edit Game Board";
             this.btnEditField.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // picOut
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(258, 12);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(500, 500);
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
+            this.picOut.BackColor = System.Drawing.Color.White;
+            this.picOut.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picOut.Location = new System.Drawing.Point(258, 12);
+            this.picOut.Margin = new System.Windows.Forms.Padding(0);
+            this.picOut.Name = "picOut";
+            this.picOut.Size = new System.Drawing.Size(500, 500);
+            this.picOut.TabIndex = 13;
+            this.picOut.TabStop = false;
             // 
             // trkZoom
             // 
@@ -309,7 +309,7 @@
             this.trkZoom.Size = new System.Drawing.Size(189, 56);
             this.trkZoom.TabIndex = 14;
             this.trkZoom.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trkZoom.Value = 1;
+            this.trkZoom.Value = 10;
             this.trkZoom.Scroll += new System.EventHandler(this.trkZoom_Scroll);
             // 
             // groupBox1
@@ -330,7 +330,7 @@
             this.lblZoom.Name = "lblZoom";
             this.lblZoom.Size = new System.Drawing.Size(43, 50);
             this.lblZoom.TabIndex = 15;
-            this.lblZoom.Text = "x1";
+            this.lblZoom.Text = "x10";
             this.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // vScrollBar1
@@ -360,7 +360,7 @@
             this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.picOut);
             this.Controls.Add(this.btnEditField);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnStop);
@@ -376,7 +376,7 @@
             this.grpGameUnit.PerformLayout();
             this.grpGameBoard.ResumeLayout(false);
             this.grpGameBoard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -408,7 +408,7 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.Button btnEditField;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picOut;
         private System.Windows.Forms.TrackBar trkZoom;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblZoom;
