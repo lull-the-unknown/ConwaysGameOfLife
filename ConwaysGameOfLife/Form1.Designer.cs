@@ -59,6 +59,7 @@
             this.lblSpeed = new System.Windows.Forms.Label();
             this.trkSpeed = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkWrapEdges = new System.Windows.Forms.CheckBox();
             this.grpGameUnit.SuspendLayout();
             this.grpGameBoard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOut)).BeginInit();
@@ -156,6 +157,7 @@
             // 
             // grpGameBoard
             // 
+            this.grpGameBoard.Controls.Add(this.chkWrapEdges);
             this.grpGameBoard.Controls.Add(this.optColorMode);
             this.grpGameBoard.Controls.Add(this.label10);
             this.grpGameBoard.Controls.Add(this.label6);
@@ -168,7 +170,7 @@
             this.grpGameBoard.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpGameBoard.Name = "grpGameBoard";
             this.grpGameBoard.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpGameBoard.Size = new System.Drawing.Size(237, 156);
+            this.grpGameBoard.Size = new System.Drawing.Size(237, 170);
             this.grpGameBoard.TabIndex = 2;
             this.grpGameBoard.TabStop = false;
             this.grpGameBoard.Text = "Game Board";
@@ -177,27 +179,27 @@
             // 
             this.optColorMode.FormattingEnabled = true;
             this.optColorMode.Items.AddRange(new object[] {
-            "Black & White"});
-            this.optColorMode.Location = new System.Drawing.Point(75, 110);
+            "On/Off"});
+            this.optColorMode.Location = new System.Drawing.Point(69, 100);
             this.optColorMode.Name = "optColorMode";
-            this.optColorMode.Size = new System.Drawing.Size(156, 28);
+            this.optColorMode.Size = new System.Drawing.Size(162, 28);
             this.optColorMode.TabIndex = 8;
-            this.optColorMode.Text = "Black & White";
+            this.optColorMode.Text = "On/Off";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(15, 113);
+            this.label10.Location = new System.Drawing.Point(4, 88);
             this.label10.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(54, 20);
+            this.label10.Size = new System.Drawing.Size(65, 40);
             this.label10.TabIndex = 7;
-            this.label10.Text = "Color:";
+            this.label10.Text = "Color\r\n  Mode:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(116, 73);
+            this.label6.Location = new System.Drawing.Point(116, 67);
             this.label6.Margin = new System.Windows.Forms.Padding(0, 10, 3, 10);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(106, 20);
@@ -216,7 +218,7 @@
             // 
             // txtHeight_GameBoard
             // 
-            this.txtHeight_GameBoard.Location = new System.Drawing.Point(69, 70);
+            this.txtHeight_GameBoard.Location = new System.Drawing.Point(69, 64);
             this.txtHeight_GameBoard.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtHeight_GameBoard.Name = "txtHeight_GameBoard";
             this.txtHeight_GameBoard.Size = new System.Drawing.Size(47, 26);
@@ -237,7 +239,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 73);
+            this.label8.Location = new System.Drawing.Point(6, 67);
             this.label8.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(63, 20);
@@ -256,7 +258,7 @@
             // 
             // btnPlay
             // 
-            this.btnPlay.Location = new System.Drawing.Point(15, 297);
+            this.btnPlay.Location = new System.Drawing.Point(15, 311);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(75, 38);
             this.btnPlay.TabIndex = 9;
@@ -267,7 +269,7 @@
             // btnStop
             // 
             this.btnStop.Enabled = false;
-            this.btnStop.Location = new System.Drawing.Point(96, 297);
+            this.btnStop.Location = new System.Drawing.Point(96, 311);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 38);
             this.btnStop.TabIndex = 10;
@@ -278,7 +280,7 @@
             // btnQuit
             // 
             this.btnQuit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnQuit.Location = new System.Drawing.Point(177, 297);
+            this.btnQuit.Location = new System.Drawing.Point(177, 311);
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(75, 38);
             this.btnQuit.TabIndex = 11;
@@ -289,7 +291,7 @@
             // btnEditField
             // 
             this.btnEditField.Enabled = false;
-            this.btnEditField.Location = new System.Drawing.Point(15, 341);
+            this.btnEditField.Location = new System.Drawing.Point(15, 355);
             this.btnEditField.Name = "btnEditField";
             this.btnEditField.Size = new System.Drawing.Size(237, 38);
             this.btnEditField.TabIndex = 12;
@@ -310,7 +312,7 @@
             // trkZoom
             // 
             this.trkZoom.AutoSize = false;
-            this.trkZoom.LargeChange = 3;
+            this.trkZoom.LargeChange = 1;
             this.trkZoom.Location = new System.Drawing.Point(2, 25);
             this.trkZoom.Minimum = 1;
             this.trkZoom.Name = "trkZoom";
@@ -324,7 +326,7 @@
             // 
             this.groupBox1.Controls.Add(this.lblZoom);
             this.groupBox1.Controls.Add(this.trkZoom);
-            this.groupBox1.Location = new System.Drawing.Point(15, 385);
+            this.groupBox1.Location = new System.Drawing.Point(15, 399);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(237, 68);
             this.groupBox1.TabIndex = 15;
@@ -350,7 +352,7 @@
             // 
             this.groupBox2.Controls.Add(this.lblSpeed);
             this.groupBox2.Controls.Add(this.trkSpeed);
-            this.groupBox2.Location = new System.Drawing.Point(15, 459);
+            this.groupBox2.Location = new System.Drawing.Point(15, 473);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(237, 68);
             this.groupBox2.TabIndex = 18;
@@ -370,7 +372,7 @@
             // trkSpeed
             // 
             this.trkSpeed.AutoSize = false;
-            this.trkSpeed.LargeChange = 3;
+            this.trkSpeed.LargeChange = 1;
             this.trkSpeed.Location = new System.Drawing.Point(2, 25);
             this.trkSpeed.Maximum = 15;
             this.trkSpeed.Name = "trkSpeed";
@@ -388,8 +390,21 @@
             this.panel1.Controls.Add(this.picOut);
             this.panel1.Location = new System.Drawing.Point(258, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(500, 500);
+            this.panel1.Size = new System.Drawing.Size(500, 514);
             this.panel1.TabIndex = 19;
+            // 
+            // chkWrapEdges
+            // 
+            this.chkWrapEdges.AutoSize = true;
+            this.chkWrapEdges.Checked = true;
+            this.chkWrapEdges.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkWrapEdges.Enabled = false;
+            this.chkWrapEdges.Location = new System.Drawing.Point(69, 134);
+            this.chkWrapEdges.Name = "chkWrapEdges";
+            this.chkWrapEdges.Size = new System.Drawing.Size(123, 24);
+            this.chkWrapEdges.TabIndex = 9;
+            this.chkWrapEdges.Text = "Wrap Edges";
+            this.chkWrapEdges.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -398,7 +413,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.CancelButton = this.btnQuit;
-            this.ClientSize = new System.Drawing.Size(766, 532);
+            this.ClientSize = new System.Drawing.Size(766, 553);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -462,6 +477,7 @@
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.TrackBar trkSpeed;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox chkWrapEdges;
     }
 }
 

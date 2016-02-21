@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConwaysGameOfLife
 {
-    class GameUnit : IGameUnit<bool>
+    class GameUnit_Bool : IGameUnit<bool>
     {
         private int Width;
         private int Height;
@@ -29,20 +29,21 @@ namespace ConwaysGameOfLife
         private bool[] NoNeighborsEdgeTB() { return new bool[Width]; }
         private bool NoNeighborsCorner() { return false; }
 
-        public GameUnit(int width, int height)
+        public GameUnit_Bool(GameUnitDesc desc, Random rand = null)
         {
-            Width = width;
-            Height = height;
-            prevboard = new bool[width, height];
-            nextboard = new bool[width, height];
+            Width = desc.Width;
+            Height = desc.Height;
+            prevboard = new bool[Width, Height];
+            nextboard = new bool[Width, Height];
 
-            Random rand = new Random();
-            //for (int x = 0; x < width; x++)
+            if (rand == null)
+                rand = new Random();
+            //for (int x = 0; x < Width; x++)
             //{
-            //    for (int y = 0; y < height; y++)
+            //    for (int y = 0; y < Height; y++)
             //    {
-            //        prevboard[x, y] = (x % 2) == (y % 2);
-            //        //prevboard[x, y] = (rand.Next(10) < 3); // 30% chance cell starts alive
+            //        //prevboard[x, y] = (x % 2) == (y % 2);
+            //        prevboard[x, y] = (rand.Next(10) < 2); // 20% chance cell starts alive
             //    }
             //}
             DrawGlider(rand.Next(0, Width-2), rand.Next(0, Height-2), rand.Next(0, 4));

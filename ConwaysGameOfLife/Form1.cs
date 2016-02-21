@@ -13,10 +13,15 @@ namespace ConwaysGameOfLife
     public partial class Form1 : Form
     {
         public enum GameState { Playing, Paused, Stopped }
-        private const int BaseSpeed = 500;
+        private const int BaseSpeed = 1000;
 
         public GameState State = GameState.Stopped;
-        private GameUnit game = null;
+        private IGameBoard game = null;
+        private IGameUnit<bool> gameUnit = null;
+        private long ticks = 0L;
+        private long sum = 0L;
+        private long suma = 0L;
+        private long count = 0L;
 
         public Form1()
         {
@@ -42,18 +47,7 @@ namespace ConwaysGameOfLife
                 State = GameState.Playing;
 
                 if (game == null)
-                {
-                    game = new GameUnit(int.Parse(txtWidth_GameUnit.Text), int.Parse(txtHeight_GameUnit.Text));
-                    game.RegisterNeighbor(game, ConwaysGameOfLife.Location.Bottom);
-                    game.RegisterNeighbor(game, ConwaysGameOfLife.Location.BottomLeft);
-                    game.RegisterNeighbor(game, ConwaysGameOfLife.Location.BottomRight);
-                    game.RegisterNeighbor(game, ConwaysGameOfLife.Location.Left);
-                    game.RegisterNeighbor(game, ConwaysGameOfLife.Location.Right);
-                    game.RegisterNeighbor(game, ConwaysGameOfLife.Location.Top);
-                    game.RegisterNeighbor(game, ConwaysGameOfLife.Location.TopLeft);
-                    game.RegisterNeighbor(game, ConwaysGameOfLife.Location.TopRight);
-                    UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
-                }
+                    StartNewGame();
 
                 timerGameTick.Enabled = true;
             }
@@ -67,6 +61,38 @@ namespace ConwaysGameOfLife
 
                 State = GameState.Paused;
             }
+        }
+
+        private void StartNewGame()
+        {
+            GameUnitDesc unitDesc = new GameUnitDesc();
+            unitDesc.Width = int.Parse(txtWidth_GameUnit.Text);
+            unitDesc.Height = int.Parse(txtHeight_GameUnit.Text);
+            GameBoardDesc gameDesc = new GameBoardDesc();
+            gameDesc.Width = int.Parse(txtWidth_GameBoard.Text);
+            gameDesc.Height = int.Parse(txtHeight_GameBoard.Text);
+            gameDesc.UnitDescriptor = unitDesc;
+            game = new GameBoard(gameDesc);
+
+            unitDesc.Width *= gameDesc.Width;
+            unitDesc.Height *= gameDesc.Height;
+            gameUnit = new GameUnit_Bool(unitDesc);
+            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.Bottom);
+            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.BottomLeft);
+            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.BottomRight);
+            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.Left);
+            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.Right);
+            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.Top);
+            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.TopLeft);
+            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.TopRight);
+            
+            UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+
+            ticks = 0L;
+            sum = 0L;
+            suma = 0L;
+            count = 0L;
+            Console.Clear();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -127,14 +153,49 @@ namespace ConwaysGameOfLife
         {
             if (game == null)
                 return;
-           // DateTime start = DateTime.Now;
-            game.CalculateNextTurn();
-            game.CommitTurn();
-            UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+            //DateTime start = DateTime.Now;
+            gameUnit.CalculateNextTurn();
+            gameUnit.CommitTurn();
+            //int elapsed1a = (DateTime.Now - start).Milliseconds;
+            UpdateImage(gameUnit.Draw(Color.DarkBlue, Color.MintCream));
+            //int elapsed1 = (DateTime.Now - start).Milliseconds;
+            ////Console.Write("{0}:", ticks++);
+            ////Console.CursorLeft = Math.Min(elapsed / 10, 30);
+            //Console.WriteLine(elapsed1a);
+            //Console.Write(elapsed1);
+            //Console.CursorTop -= 1;
+            //Console.CursorLeft = 5;
 
-            //int elapsed = (DateTime.Now - start).Milliseconds;
-            //Console.CursorLeft = Math.Min(elapsed, 15);
-            //Console.WriteLine(elapsed);
+
+            //start = DateTime.Now;
+            //game.TakeTurn();
+            //int elapsed2a = (DateTime.Now - start).Milliseconds;
+            //UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+            //int elapsed2 = (DateTime.Now - start).Milliseconds;
+            ////Console.Write("{0}:", ticks++);
+            ////Console.CursorLeft = Math.Min(elapsed / 10 + 30, 60);
+            //Console.WriteLine(elapsed2a);
+            //Console.CursorLeft = 5;
+            //Console.Write(elapsed2);
+            //Console.CursorTop -= 1;
+            //Console.CursorLeft = 10;
+
+            //int diff = elapsed2a - elapsed1a;
+            //Console.Write("({0}{1})", diff < 0 ? "" : "+", diff);
+            //suma += diff;
+            //count++;
+            //long avg = suma / count;
+            //Console.CursorLeft += 3;
+            //Console.WriteLine("({0}{1})", avg < 0 ? "" : "+", avg);
+            //Console.CursorLeft = 10;
+
+            //diff = elapsed2 - elapsed1;
+            //Console.Write("({0}{1})", diff < 0 ? "" : "+", diff);
+            //sum += diff;
+            //avg = sum / count;
+            //Console.CursorLeft += 3;
+            //Console.WriteLine("({0}{1})", avg < 0 ? "" : "+", avg);
+            //Console.WriteLine();
         }
         private void UpdateImage(Image img)
         {
@@ -154,6 +215,7 @@ namespace ConwaysGameOfLife
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 g.DrawImage(imgOld, 0, 0, img.Width, img.Height);
                 imgOld.Dispose();
+                GC.Collect();
             }
             if (picOut.Image == null)
             {

@@ -55,7 +55,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameUnit.cs" />
+    <Compile Include="GameBoard.cs" />
+    <Compile Include="GameUnit_Bool.cs" />
+    <Compile Include="IGameBoard.cs" />
     <Compile Include="IGameUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

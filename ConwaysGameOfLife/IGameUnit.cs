@@ -9,7 +9,7 @@ namespace ConwaysGameOfLife
 {
     public enum Location { Left, TopLeft, Top, TopRight, Right, BottomRight, Bottom, BottomLeft }
 
-    interface IGameUnit<T>
+    public interface IGameUnit<T>
     {
         Image Draw( Color foreground, Color background );
         void CalculateNextTurn();
@@ -23,5 +23,11 @@ namespace ConwaysGameOfLife
         T GetCorner_BottomLeft();
         T GetCorner_BottomRight();
         void RegisterNeighbor(IGameUnit<T> neighbor, Location location);
+    }
+
+    public class GameUnitDesc
+    {
+        public int Width;
+        public int Height;
     }
 }
