@@ -4,58 +4,58 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConwaysGameOfLife
 {
-    class GameUnit_Bool : IGameUnit<bool>
+    public class GameUnit_Bool : IGameUnit<bool>
     {
         private int Width;
         private int Height;
-        private bool[,] prevboard;
-        private bool[,] nextboard;
+        private bool[,] currentBoard;
+        private bool[,] nextBoard;
+        private int[] xIndicies;
+        private int[] yIndicies;
 
-        private delegate bool[] NeighborsEdge();
-        private delegate bool NeighborsCorner();
-        private NeighborsEdge Neighbor_Left;
-        private NeighborsEdge Neighbor_Top;
-        private NeighborsEdge Neighbor_Right;
-        private NeighborsEdge Neighbor_Bottom;
-        private NeighborsCorner Neighbor_TopLeft;
-        private NeighborsCorner Neighbor_TopRight;
-        private NeighborsCorner Neighbor_BottomLeft;
-        private NeighborsCorner Neighbor_BottomRight;
-        private bool[] NoNeighborsEdgeLR() { return new bool[Height]; }
-        private bool[] NoNeighborsEdgeTB() { return new bool[Width]; }
-        private bool NoNeighborsCorner() { return false; }
+        private double sum1 = 0d;
+        private double sum2 = 0d;
+        private int count = 0;
 
-        public GameUnit_Bool(GameUnitDesc desc, Random rand = null)
+        public GameUnit_Bool(GameUnitDesc desc)
         {
             Width = desc.Width;
             Height = desc.Height;
-            prevboard = new bool[Width, Height];
-            nextboard = new bool[Width, Height];
+            currentBoard = new bool[Width, Height];
+            nextBoard = new bool[Width, Height];
 
-            if (rand == null)
-                rand = new Random();
+            xIndicies = new int[Width + 2];
+            xIndicies[0] = Width - 1;
+            for (int x = 0; x < Width; x++)
+                xIndicies[x + 1] = x;
+            xIndicies[Width + 1] = 0;
+
+            yIndicies = new int[Height + 2];
+            yIndicies[0] = Height - 1;
+            for (int y = 0; y < Height; y++)
+                yIndicies[y + 1] = y;
+            yIndicies[Height + 1] = 0;
+
+            Random rand = new Random();
             //for (int x = 0; x < Width; x++)
             //{
             //    for (int y = 0; y < Height; y++)
             //    {
             //        //prevboard[x, y] = (x % 2) == (y % 2);
-            //        prevboard[x, y] = (rand.Next(10) < 2); // 20% chance cell starts alive
+            //        prevboard[x, y] = (rand.Next(10) < 3); // 30% chance cell starts alive
             //    }
             //}
-            DrawGlider(rand.Next(0, Width-2), rand.Next(0, Height-2), rand.Next(0, 4));
-
-            Neighbor_Left = NoNeighborsEdgeLR;
-            Neighbor_Top = NoNeighborsEdgeTB;
-            Neighbor_Right = NoNeighborsEdgeLR;
-            Neighbor_Bottom = NoNeighborsEdgeTB;
-            Neighbor_TopLeft = NoNeighborsCorner;
-            Neighbor_TopRight = NoNeighborsCorner;
-            Neighbor_BottomLeft = NoNeighborsCorner;
-            Neighbor_BottomRight = NoNeighborsCorner;
+            //int numGliders = Math.Max(1, Math.Min(Width, Height) / 10) + 1;
+            int numGliders = Math.Max(1, Width * Height / 100) + 1;
+            numGliders = rand.Next(1, numGliders);
+            for (int x = 0; x < numGliders; x++)
+                DrawGlider(rand.Next(0, Width - 2), rand.Next(0, Height - 2), rand.Next(0, 4));
+            //DrawGlider(0, 0, 0);
         }
 
         private void DrawGlider(int x, int y, int orientation)
@@ -63,32 +63,32 @@ namespace ConwaysGameOfLife
             switch (orientation)
             {
                 case 0:
-                    prevboard[x, y + 1] = true;
-                    prevboard[x + 1, y + 2] = true;
-                    prevboard[x + 2, y] = true;
-                    prevboard[x + 2, y + 1] = true;
-                    prevboard[x + 2, y + 2] = true;
+                    currentBoard[x, y + 1] = true;
+                    currentBoard[x + 1, y + 2] = true;
+                    currentBoard[x + 2, y] = true;
+                    currentBoard[x + 2, y + 1] = true;
+                    currentBoard[x + 2, y + 2] = true;
                     break;
                 case 1:
-                    prevboard[x, y + 1] = true;
-                    prevboard[x, y + 2] = true;
-                    prevboard[x + 1, y] = true;
-                    prevboard[x + 1, y + 2] = true;
-                    prevboard[x + 2, y + 2] = true;
+                    currentBoard[x, y + 1] = true;
+                    currentBoard[x, y + 2] = true;
+                    currentBoard[x + 1, y] = true;
+                    currentBoard[x + 1, y + 2] = true;
+                    currentBoard[x + 2, y + 2] = true;
                     break;
                 case 2:
-                    prevboard[x, y] = true;
-                    prevboard[x, y + 1] = true;
-                    prevboard[x, y + 2] = true;
-                    prevboard[x + 1, y] = true;
-                    prevboard[x + 2, y + 1] = true;
+                    currentBoard[x, y] = true;
+                    currentBoard[x, y + 1] = true;
+                    currentBoard[x, y + 2] = true;
+                    currentBoard[x + 1, y] = true;
+                    currentBoard[x + 2, y + 1] = true;
                     break;
                 default:
-                    prevboard[x, y] = true;
-                    prevboard[x + 1, y] = true;
-                    prevboard[x + 1, y + 2] = true;
-                    prevboard[x + 2, y] = true;
-                    prevboard[x + 2, y + 1] = true;
+                    currentBoard[x, y] = true;
+                    currentBoard[x + 1, y] = true;
+                    currentBoard[x + 1, y + 2] = true;
+                    currentBoard[x + 2, y] = true;
+                    currentBoard[x + 2, y + 1] = true;
                     break;
             }
         }
@@ -102,174 +102,169 @@ namespace ConwaysGameOfLife
             //BitmapData data = result.LockBits( new Rectangle(0, 0, result.Width, result.Height), 
             //                                   ImageLockMode.WriteOnly, 
             //                                   result.PixelFormat);
-            
+
             for (int x = 0; x < Width; x++)
                 for (int y = 0; y < Height; y++)
-                    result.SetPixel(x, y, prevboard[x, y] ? foreground : background);
+                    result.SetPixel(x, y, currentBoard[x, y] ? foreground : background);
 
             //result.UnlockBits(data);
             return result;
         }
 
-        public void RegisterNeighbor(IGameUnit<bool> neighbor, Location edge)
+        public void Play()
         {
-            switch (edge)
+            //DateTime start;
+            //double diff1;
+            //double diff2;
+            //count++;
+
+            if (Width < 500 && Height < 500)
             {
-                case Location.Left:
-                    Neighbor_Left = neighbor.GetEdge_Right;
-                    break;
-                case Location.Top:
-                    Neighbor_Top = neighbor.GetEdge_Bottom;
-                    break;
-                case Location.Right:
-                    Neighbor_Right = neighbor.GetEdge_Left;
-                    break;
-                case Location.Bottom:
-                    Neighbor_Bottom = neighbor.GetEdge_Top;
-                    break;
-                case Location.TopLeft:
-                    Neighbor_TopLeft = neighbor.GetCorner_BottomRight;
-                    break;
-                case Location.TopRight:
-                    Neighbor_TopRight = neighbor.GetCorner_BottomLeft;
-                    break;
-                case Location.BottomRight:
-                    Neighbor_BottomRight = neighbor.GetCorner_TopLeft;
-                    break;
-                case Location.BottomLeft:
-                    Neighbor_BottomLeft = neighbor.GetCorner_TopRight;
-                    break;
-                default:
-                    throw new NotImplementedException();
+                //start = DateTime.Now;
+                CalculateNextTurn_Whole();
+                //diff1 = (DateTime.Now - start).TotalMilliseconds;
+                //sum1 += diff1;
+                //start = DateTime.Now;
+                //CalculateNextTurn_Sub(0, 0, Width, Height);
+                //diff2 = (DateTime.Now - start).TotalMilliseconds;
+                //sum2 += diff2;
+
+                //Console.WriteLine("Synchronous 1:{0,8:N4}ms ({1,8:N4}ms)", diff1, sum1 / count);
+                //Console.WriteLine("Synchronous 2:{0,8:N4}ms ({1,8:N4}ms)", diff2, sum2 / count);
+                //Console.WriteLine();
             }
-        }
-
-        public bool[] GetEdge_Left()
-        {
-            bool[] result = new bool[Height];
-            for (int y = 0; y < Height; y++)
-                result[y] = prevboard[0, y];
-            return result;
-        }
-
-        public bool[] GetEdge_Top()
-        {
-            bool[] result = new bool[Width];
-            for (int x = 0; x < Width; x++)
-                result[x] = prevboard[x, 0];
-            return result;
-        }
-
-        public bool[] GetEdge_Right()
-        {
-            bool[] result = new bool[Height];
-            for (int y = 0; y < Height; y++)
-                result[y] = prevboard[Width - 1, y];
-            return result;
-        }
-
-        public bool[] GetEdge_Bottom()
-        {
-            bool[] result = new bool[Width];
-            for (int x = 0; x < Width; x++)
-                result[x] = prevboard[x, Height - 1];
-            return result;
-        }
-
-        public bool GetCorner_TopLeft()
-        {
-            return prevboard[0, 0];
-        }
-
-        public bool GetCorner_TopRight()
-        {
-            return prevboard[Width - 1, 0];
-        }
-
-        public bool GetCorner_BottomLeft()
-        {
-            return prevboard[0, Height - 1];
-        }
-
-        public bool GetCorner_BottomRight()
-        {
-            return prevboard[Width - 1, Height - 1];
-        }
-
-        public void CalculateNextTurn()
-        {
-            byte[,] neighbors = new byte[Width + 2, Height + 2];
-            for (int x = 0; x < Width; x++)
+            else
             {
-                for (int y = 0; y < Height; y++)
+                //start = DateTime.Now;
+                CalculateNextTurn_Async();
+                //diff1 = (DateTime.Now - start).TotalMilliseconds;
+                //sum1 += diff1;
+                //start = DateTime.Now;
+                ////CalculateNextTurn_Async2();
+                //diff2 = (DateTime.Now - start).TotalMilliseconds;
+                //sum2 += diff2;
+
+                //Console.WriteLine("Async 1:{0,8:N4}ms ({1,8:N4}ms)", diff1, sum1 / count);
+                //Console.WriteLine("Async 2:{0,8:N4}ms ({1,8:N4}ms)", diff2, sum2 / count);
+                //Console.WriteLine();
+            }
+            CommitTurn();
+        }
+        public void CalculateNextTurn_Async()
+        {
+            int count = 10;
+            int sizeX = Width / count;
+            int sizeY = Height / count;
+
+            Parallel.For(0, count, delegate (int x)
+            {
+                Parallel.For(0, count, delegate (int y)
                 {
-                    if (prevboard[x, y] == false)
-                        continue;
-                    for (int nx = 0; nx < 3; nx++)
-                        for (int ny = 0; ny < 3; ny++)
-                            neighbors[x + nx, y + ny]++; //Note: x in prevboard is == to (x-1) in neighbors because neighbors has extra row and column at the beginning
+                    CalculateNextTurn_Sub(x * sizeX, y * sizeY, sizeX, sizeY);
+                });
+            });
+            CommitTurn();
+        }
+        public void CalculateNextTurn_Sub(int left, int top, int width, int height)
+        {
+            int xBoard;
+            int xTemp;
+            int yBoard;
+            int y0;
+            int y1;
+            int y2;
+            byte neighborCount;
+            for (int x = 0; x < width; x++)
+            {
+                xBoard = left + x;
+                for (int y = 0; y < height; y++)
+                {
+                    yBoard = top + y;
+                    y0 = yIndicies[yBoard];
+                    y1 = yIndicies[yBoard + 1];
+                    y2 = yIndicies[yBoard + 2];
+                    neighborCount = 0;
+
+                    xTemp = xIndicies[xBoard];
+                    if (currentBoard[xTemp, y0])
+                        neighborCount++;
+                    if (currentBoard[xTemp, y1])
+                        neighborCount++;
+                    if (currentBoard[xTemp, y2])
+                        neighborCount++;
+                    xTemp = xIndicies[xBoard + 1];
+                    if (currentBoard[xTemp, y0])
+                        neighborCount++;
+                    //[xBoard, y1] == self
+                    if (currentBoard[xTemp, y2])
+                        neighborCount++;
+                    xTemp = xIndicies[xBoard + 2];
+                    if (currentBoard[xTemp, y0])
+                        neighborCount++;
+                    if (currentBoard[xTemp, y1])
+                        neighborCount++;
+                    if (currentBoard[xTemp, y2])
+                        neighborCount++;
+
+                    if (neighborCount == 3)
+                        nextBoard[xBoard, yBoard] = true;
+                    else if (neighborCount == 2 && currentBoard[xBoard, yBoard])
+                        nextBoard[xBoard, yBoard] = true;
+                    else
+                        nextBoard[xBoard, yBoard] = false;
                 }
             }
-            bool[] neighborEdge = Neighbor_Top();
-            for (int x = 0; x < Width; x++)
-            {
-                if (neighborEdge[x] == false)
-                    continue;
-                for (int nx = 0; nx < 3; nx++)
-                    neighbors[x + nx, 1]++;
-            }
-            neighborEdge = Neighbor_Bottom();
-            for (int x = 0; x < Width; x++)
-            {
-                if (neighborEdge[x] == false)
-                    continue;
-                for (int nx = 0; nx < 3; nx++)
-                    neighbors[x + nx, Height]++;
-            }
-            neighborEdge = Neighbor_Left();
-            for (int y = 0; y < Height; y++)
-            {
-                if (neighborEdge[y] == false)
-                    continue;
-                for (int ny = 0; ny < 3; ny++)
-                    neighbors[1, y + ny]++;
-            }
-            neighborEdge = Neighbor_Right();
-            for (int y = 0; y < Height; y++)
-            {
-                if (neighborEdge[y] == false)
-                    continue;
-                for (int ny = 0; ny < 3; ny++)
-                    neighbors[Width, y + ny]++;
-            }
-            if (Neighbor_TopLeft())
-                neighbors[1, 1]++;
-            if (Neighbor_TopRight())
-                neighbors[Width, 1]++;
-            if (Neighbor_BottomLeft())
-                neighbors[1, Height]++;
-            if (Neighbor_BottomRight())
-                neighbors[Width, Height]++;
-
+        }
+        
+        public void CalculateNextTurn_Whole()
+        {
+            int xBoard;
+            int y0;
+            int y1;
+            int y2;
             byte neighborCount;
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    neighborCount = neighbors[x + 1, y + 1];
+                    neighborCount = 0;
+                    y0 = yIndicies[y];
+                    y1 = yIndicies[y + 1];
+                    y2 = yIndicies[y + 2];
+                    xBoard = xIndicies[x];
+                    if (currentBoard[xBoard, y0])
+                        neighborCount++;
+                    if (currentBoard[xBoard, y1])
+                        neighborCount++;
+                    if (currentBoard[xBoard, y2])
+                        neighborCount++;
+                    xBoard = xIndicies[x + 1];
+                    if (currentBoard[xBoard, y0])
+                        neighborCount++;
+                    //[xBoard, y1] == self
+                    if (currentBoard[xBoard, y2])
+                        neighborCount++;
+                    xBoard = xIndicies[x + 2];
+                    if (currentBoard[xBoard, y0])
+                        neighborCount++;
+                    if (currentBoard[xBoard, y1])
+                        neighborCount++;
+                    if (currentBoard[xBoard, y2])
+                        neighborCount++;
+
                     if (neighborCount == 3)
-                        nextboard[x, y] = true;
-                    else if ((neighborCount == 4) && prevboard[x, y])
-                        nextboard[x, y] = true;
+                        nextBoard[x, y] = true;
+                    else if (neighborCount == 2 && currentBoard[x, y])
+                        nextBoard[x, y] = true;
                     else
-                        nextboard[x, y] = false;
+                        nextBoard[x, y] = false;
                 }
             }
         }
 
         public void CommitTurn()
         {
-            Array.Copy(nextboard, prevboard, Width * Height);
+            Array.Copy(nextBoard, currentBoard, Width * Height);
         }
     }
 }

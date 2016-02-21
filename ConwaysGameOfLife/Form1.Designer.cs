@@ -31,25 +31,19 @@
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.grpGameUnit = new System.Windows.Forms.GroupBox();
+            this.chkWrapEdges = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.optColorMode = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtHeight_GameUnit = new System.Windows.Forms.TextBox();
-            this.txtWidth_GameUnit = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtHeight = new System.Windows.Forms.TextBox();
+            this.txtWidth = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.grpGameBoard = new System.Windows.Forms.GroupBox();
-            this.optColorMode = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtHeight_GameBoard = new System.Windows.Forms.TextBox();
-            this.txtWidth_GameBoard = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
-            this.btnEditField = new System.Windows.Forms.Button();
+            this.btnEditBoard = new System.Windows.Forms.Button();
             this.picOut = new System.Windows.Forms.PictureBox();
             this.trkZoom = new System.Windows.Forms.TrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -59,9 +53,7 @@
             this.lblSpeed = new System.Windows.Forms.Label();
             this.trkSpeed = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.chkWrapEdges = new System.Windows.Forms.CheckBox();
             this.grpGameUnit.SuspendLayout();
-            this.grpGameBoard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -80,60 +72,99 @@
             // 
             // grpGameUnit
             // 
+            this.grpGameUnit.Controls.Add(this.chkWrapEdges);
             this.grpGameUnit.Controls.Add(this.label5);
+            this.grpGameUnit.Controls.Add(this.optColorMode);
             this.grpGameUnit.Controls.Add(this.label4);
-            this.grpGameUnit.Controls.Add(this.txtHeight_GameUnit);
-            this.grpGameUnit.Controls.Add(this.txtWidth_GameUnit);
+            this.grpGameUnit.Controls.Add(this.label10);
+            this.grpGameUnit.Controls.Add(this.txtHeight);
+            this.grpGameUnit.Controls.Add(this.txtWidth);
             this.grpGameUnit.Controls.Add(this.label3);
             this.grpGameUnit.Controls.Add(this.label2);
             this.grpGameUnit.Location = new System.Drawing.Point(15, 15);
             this.grpGameUnit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpGameUnit.Name = "grpGameUnit";
             this.grpGameUnit.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpGameUnit.Size = new System.Drawing.Size(237, 111);
+            this.grpGameUnit.Size = new System.Drawing.Size(237, 289);
             this.grpGameUnit.TabIndex = 1;
             this.grpGameUnit.TabStop = false;
             this.grpGameUnit.Text = "Game Unit";
             // 
+            // chkWrapEdges
+            // 
+            this.chkWrapEdges.AutoSize = true;
+            this.chkWrapEdges.Checked = true;
+            this.chkWrapEdges.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkWrapEdges.Enabled = false;
+            this.chkWrapEdges.Location = new System.Drawing.Point(69, 147);
+            this.chkWrapEdges.Name = "chkWrapEdges";
+            this.chkWrapEdges.Size = new System.Drawing.Size(123, 24);
+            this.chkWrapEdges.TabIndex = 9;
+            this.chkWrapEdges.Text = "Wrap Edges";
+            this.chkWrapEdges.UseVisualStyleBackColor = true;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(116, 73);
+            this.label5.Location = new System.Drawing.Point(187, 73);
             this.label5.Margin = new System.Windows.Forms.Padding(0, 10, 3, 10);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 20);
             this.label5.TabIndex = 6;
             this.label5.Text = "cells";
             // 
+            // optColorMode
+            // 
+            this.optColorMode.FormattingEnabled = true;
+            this.optColorMode.Items.AddRange(new object[] {
+            "On/Off"});
+            this.optColorMode.Location = new System.Drawing.Point(69, 106);
+            this.optColorMode.Name = "optColorMode";
+            this.optColorMode.Size = new System.Drawing.Size(162, 28);
+            this.optColorMode.TabIndex = 8;
+            this.optColorMode.Text = "On/Off";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(116, 33);
+            this.label4.Location = new System.Drawing.Point(187, 33);
             this.label4.Margin = new System.Windows.Forms.Padding(0, 10, 3, 10);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(44, 20);
             this.label4.TabIndex = 5;
             this.label4.Text = "cells";
             // 
-            // txtHeight_GameUnit
+            // label10
             // 
-            this.txtHeight_GameUnit.Location = new System.Drawing.Point(69, 70);
-            this.txtHeight_GameUnit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtHeight_GameUnit.Name = "txtHeight_GameUnit";
-            this.txtHeight_GameUnit.Size = new System.Drawing.Size(47, 26);
-            this.txtHeight_GameUnit.TabIndex = 4;
-            this.txtHeight_GameUnit.Text = "10";
-            this.txtHeight_GameUnit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(4, 94);
+            this.label10.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(65, 40);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "Color\r\n  Mode:";
             // 
-            // txtWidth_GameUnit
+            // txtHeight
             // 
-            this.txtWidth_GameUnit.Location = new System.Drawing.Point(69, 30);
-            this.txtWidth_GameUnit.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.txtWidth_GameUnit.Name = "txtWidth_GameUnit";
-            this.txtWidth_GameUnit.Size = new System.Drawing.Size(47, 26);
-            this.txtWidth_GameUnit.TabIndex = 3;
-            this.txtWidth_GameUnit.Text = "10";
-            this.txtWidth_GameUnit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHeight.Location = new System.Drawing.Point(69, 70);
+            this.txtHeight.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtHeight.Name = "txtHeight";
+            this.txtHeight.Size = new System.Drawing.Size(118, 26);
+            this.txtHeight.TabIndex = 4;
+            this.txtHeight.Text = "1000";
+            this.txtHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHeight.Leave += new System.EventHandler(this.CheckTextBoxes);
+            // 
+            // txtWidth
+            // 
+            this.txtWidth.Location = new System.Drawing.Point(69, 30);
+            this.txtWidth.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.txtWidth.Name = "txtWidth";
+            this.txtWidth.Size = new System.Drawing.Size(118, 26);
+            this.txtWidth.TabIndex = 3;
+            this.txtWidth.Text = "1000";
+            this.txtWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtWidth.Leave += new System.EventHandler(this.CheckTextBoxes);
             // 
             // label3
             // 
@@ -154,107 +185,6 @@
             this.label2.Size = new System.Drawing.Size(57, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "Width:";
-            // 
-            // grpGameBoard
-            // 
-            this.grpGameBoard.Controls.Add(this.chkWrapEdges);
-            this.grpGameBoard.Controls.Add(this.optColorMode);
-            this.grpGameBoard.Controls.Add(this.label10);
-            this.grpGameBoard.Controls.Add(this.label6);
-            this.grpGameBoard.Controls.Add(this.label7);
-            this.grpGameBoard.Controls.Add(this.txtHeight_GameBoard);
-            this.grpGameBoard.Controls.Add(this.txtWidth_GameBoard);
-            this.grpGameBoard.Controls.Add(this.label8);
-            this.grpGameBoard.Controls.Add(this.label9);
-            this.grpGameBoard.Location = new System.Drawing.Point(15, 134);
-            this.grpGameBoard.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpGameBoard.Name = "grpGameBoard";
-            this.grpGameBoard.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpGameBoard.Size = new System.Drawing.Size(237, 170);
-            this.grpGameBoard.TabIndex = 2;
-            this.grpGameBoard.TabStop = false;
-            this.grpGameBoard.Text = "Game Board";
-            // 
-            // optColorMode
-            // 
-            this.optColorMode.FormattingEnabled = true;
-            this.optColorMode.Items.AddRange(new object[] {
-            "On/Off"});
-            this.optColorMode.Location = new System.Drawing.Point(69, 100);
-            this.optColorMode.Name = "optColorMode";
-            this.optColorMode.Size = new System.Drawing.Size(162, 28);
-            this.optColorMode.TabIndex = 8;
-            this.optColorMode.Text = "On/Off";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 88);
-            this.label10.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(65, 40);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "Color\r\n  Mode:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(116, 67);
-            this.label6.Margin = new System.Windows.Forms.Padding(0, 10, 3, 10);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(106, 20);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "game boards";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(116, 33);
-            this.label7.Margin = new System.Windows.Forms.Padding(0, 10, 3, 10);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 20);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "game boards";
-            // 
-            // txtHeight_GameBoard
-            // 
-            this.txtHeight_GameBoard.Location = new System.Drawing.Point(69, 64);
-            this.txtHeight_GameBoard.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtHeight_GameBoard.Name = "txtHeight_GameBoard";
-            this.txtHeight_GameBoard.Size = new System.Drawing.Size(47, 26);
-            this.txtHeight_GameBoard.TabIndex = 4;
-            this.txtHeight_GameBoard.Text = "1";
-            this.txtHeight_GameBoard.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtWidth_GameBoard
-            // 
-            this.txtWidth_GameBoard.Location = new System.Drawing.Point(69, 30);
-            this.txtWidth_GameBoard.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.txtWidth_GameBoard.Name = "txtWidth_GameBoard";
-            this.txtWidth_GameBoard.Size = new System.Drawing.Size(47, 26);
-            this.txtWidth_GameBoard.TabIndex = 3;
-            this.txtWidth_GameBoard.Text = "1";
-            this.txtWidth_GameBoard.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 67);
-            this.label8.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(63, 20);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Height:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 33);
-            this.label9.Margin = new System.Windows.Forms.Padding(3, 10, 0, 10);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(57, 20);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Width:";
             // 
             // btnPlay
             // 
@@ -288,15 +218,15 @@
             this.btnQuit.UseVisualStyleBackColor = true;
             this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
-            // btnEditField
+            // btnEditBoard
             // 
-            this.btnEditField.Enabled = false;
-            this.btnEditField.Location = new System.Drawing.Point(15, 355);
-            this.btnEditField.Name = "btnEditField";
-            this.btnEditField.Size = new System.Drawing.Size(237, 38);
-            this.btnEditField.TabIndex = 12;
-            this.btnEditField.Text = "Edit Game Board";
-            this.btnEditField.UseVisualStyleBackColor = true;
+            this.btnEditBoard.Enabled = false;
+            this.btnEditBoard.Location = new System.Drawing.Point(15, 355);
+            this.btnEditBoard.Name = "btnEditBoard";
+            this.btnEditBoard.Size = new System.Drawing.Size(237, 38);
+            this.btnEditBoard.TabIndex = 12;
+            this.btnEditBoard.Text = "Edit Game Board";
+            this.btnEditBoard.UseVisualStyleBackColor = true;
             // 
             // picOut
             // 
@@ -319,7 +249,7 @@
             this.trkZoom.Size = new System.Drawing.Size(189, 34);
             this.trkZoom.TabIndex = 14;
             this.trkZoom.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trkZoom.Value = 10;
+            this.trkZoom.Value = 1;
             this.trkZoom.Scroll += new System.EventHandler(this.trkZoom_Scroll);
             // 
             // groupBox1
@@ -393,19 +323,6 @@
             this.panel1.Size = new System.Drawing.Size(500, 514);
             this.panel1.TabIndex = 19;
             // 
-            // chkWrapEdges
-            // 
-            this.chkWrapEdges.AutoSize = true;
-            this.chkWrapEdges.Checked = true;
-            this.chkWrapEdges.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkWrapEdges.Enabled = false;
-            this.chkWrapEdges.Location = new System.Drawing.Point(69, 134);
-            this.chkWrapEdges.Name = "chkWrapEdges";
-            this.chkWrapEdges.Size = new System.Drawing.Size(123, 24);
-            this.chkWrapEdges.TabIndex = 9;
-            this.chkWrapEdges.Text = "Wrap Edges";
-            this.chkWrapEdges.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AcceptButton = this.btnPlay;
@@ -417,11 +334,10 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnEditField);
+            this.Controls.Add(this.btnEditBoard);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnPlay);
-            this.Controls.Add(this.grpGameBoard);
             this.Controls.Add(this.grpGameUnit);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -431,8 +347,6 @@
             this.ClientSizeChanged += new System.EventHandler(this.Form1_ClientSizeChanged);
             this.grpGameUnit.ResumeLayout(false);
             this.grpGameUnit.PerformLayout();
-            this.grpGameBoard.ResumeLayout(false);
-            this.grpGameBoard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -453,21 +367,14 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtHeight_GameUnit;
-        private System.Windows.Forms.TextBox txtWidth_GameUnit;
-        private System.Windows.Forms.GroupBox grpGameBoard;
+        private System.Windows.Forms.TextBox txtHeight;
+        private System.Windows.Forms.TextBox txtWidth;
         private System.Windows.Forms.ComboBox optColorMode;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtHeight_GameBoard;
-        private System.Windows.Forms.TextBox txtWidth_GameBoard;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnQuit;
-        private System.Windows.Forms.Button btnEditField;
+        private System.Windows.Forms.Button btnEditBoard;
         private System.Windows.Forms.PictureBox picOut;
         private System.Windows.Forms.TrackBar trkZoom;
         private System.Windows.Forms.GroupBox groupBox1;

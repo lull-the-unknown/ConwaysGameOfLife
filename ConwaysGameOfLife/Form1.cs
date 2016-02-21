@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,13 +17,12 @@ namespace ConwaysGameOfLife
         private const int BaseSpeed = 1000;
 
         public GameState State = GameState.Stopped;
-        private IGameBoard game = null;
-        private IGameUnit<bool> gameUnit = null;
+        private IGameUnit<bool> game = null;
         private long ticks = 0L;
-        private long sum = 0L;
-        private long suma = 0L;
+        private long sum1 = 0L;
+        private long sum2 = 0L;
         private long count = 0L;
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace ConwaysGameOfLife
                 btnPlay.Text = "Pause";
                 btnStop.Enabled = true;
                 grpGameUnit.Enabled = false;
-                grpGameBoard.Enabled = false;
+                btnEditBoard.Enabled = false;
 
                 State = GameState.Playing;
 
@@ -57,42 +57,10 @@ namespace ConwaysGameOfLife
                 btnPlay.Text = "Play";
                 btnStop.Enabled = true;
                 grpGameUnit.Enabled = false;
-                grpGameBoard.Enabled = false;
+                btnEditBoard.Enabled = false;
 
                 State = GameState.Paused;
             }
-        }
-
-        private void StartNewGame()
-        {
-            GameUnitDesc unitDesc = new GameUnitDesc();
-            unitDesc.Width = int.Parse(txtWidth_GameUnit.Text);
-            unitDesc.Height = int.Parse(txtHeight_GameUnit.Text);
-            GameBoardDesc gameDesc = new GameBoardDesc();
-            gameDesc.Width = int.Parse(txtWidth_GameBoard.Text);
-            gameDesc.Height = int.Parse(txtHeight_GameBoard.Text);
-            gameDesc.UnitDescriptor = unitDesc;
-            game = new GameBoard(gameDesc);
-
-            unitDesc.Width *= gameDesc.Width;
-            unitDesc.Height *= gameDesc.Height;
-            gameUnit = new GameUnit_Bool(unitDesc);
-            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.Bottom);
-            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.BottomLeft);
-            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.BottomRight);
-            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.Left);
-            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.Right);
-            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.Top);
-            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.TopLeft);
-            gameUnit.RegisterNeighbor(gameUnit, ConwaysGameOfLife.Location.TopRight);
-            
-            UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
-
-            ticks = 0L;
-            sum = 0L;
-            suma = 0L;
-            count = 0L;
-            Console.Clear();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -102,11 +70,48 @@ namespace ConwaysGameOfLife
             btnStop.Enabled = false;
             btnPlay.Focus();
             grpGameUnit.Enabled = true;
-            grpGameBoard.Enabled = true;
+            btnEditBoard.Enabled = false;
 
             game = null;
             UpdateImage(null);
             State = GameState.Stopped;
+        }
+
+        private void StartNewGame()
+        {
+            ticks = 0L;
+            sum1 = 0L;
+            sum2 = 0L;
+            count = 0L;
+            Console.Clear();
+
+            GameUnitDesc unitDesc = new GameUnitDesc();
+            Regex reg = new Regex("\\D+");
+            unitDesc.Width = int.Parse(reg.Replace(txtWidth.Text, string.Empty)) + 5;
+            unitDesc.Width -= unitDesc.Width % 10;
+            unitDesc.Height = int.Parse(reg.Replace(txtHeight.Text, string.Empty)) + 5;
+            unitDesc.Height -= unitDesc.Height % 10;
+            Console.WriteLine("Starting new game: width={0}, height={0}", unitDesc.Width, unitDesc.Height);
+            game = new GameUnit_Bool(unitDesc);
+            
+            //UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+        }
+
+        private void CheckTextBoxes( object sender, EventArgs e )
+        {
+            TextBox txtSender = sender as TextBox;
+            string text = txtSender.Text;
+            if (text.IndexOf('.') >= 0)
+                text = text.Substring(0, text.IndexOf('.'));
+            text = (new Regex("\\D+")).Replace(text, string.Empty);
+            if (text.Length < 1)
+                text = "0";
+            int result = int.Parse(text);
+            for (int x = text.Length - 3; x > 0; x -= 3)
+            {
+                text = string.Format("{0},{1}", text.Substring(0, x), text.Substring(x));
+            }
+            txtSender.Text = text;
         }
 
         private void trkZoom_Scroll(object sender, EventArgs e)
@@ -151,57 +156,39 @@ namespace ConwaysGameOfLife
 
         private void timerGameTick_Tick(object sender, EventArgs e)
         {
+            //Console.WriteLine( "Timer tick, stopping timer" );
+            //timerGameTick.Enabled = false;
             if (game == null)
                 return;
             //DateTime start = DateTime.Now;
-            gameUnit.CalculateNextTurn();
-            gameUnit.CommitTurn();
-            //int elapsed1a = (DateTime.Now - start).Milliseconds;
-            UpdateImage(gameUnit.Draw(Color.DarkBlue, Color.MintCream));
-            //int elapsed1 = (DateTime.Now - start).Milliseconds;
-            ////Console.Write("{0}:", ticks++);
-            ////Console.CursorLeft = Math.Min(elapsed / 10, 30);
-            //Console.WriteLine(elapsed1a);
-            //Console.Write(elapsed1);
-            //Console.CursorTop -= 1;
-            //Console.CursorLeft = 5;
-
-
+            game.Play();
+            //int elapsed1 = (int)(DateTime.Now - start).TotalMilliseconds;
             //start = DateTime.Now;
-            //game.TakeTurn();
-            //int elapsed2a = (DateTime.Now - start).Milliseconds;
-            //UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
-            //int elapsed2 = (DateTime.Now - start).Milliseconds;
-            ////Console.Write("{0}:", ticks++);
-            ////Console.CursorLeft = Math.Min(elapsed / 10 + 30, 60);
-            //Console.WriteLine(elapsed2a);
-            //Console.CursorLeft = 5;
+        
+        /**///UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+            
+            //int elapsed2 = (int)(DateTime.Now - start).TotalMilliseconds;
+            //Console.WriteLine("{0}:", ticks++);
+            //Console.WriteLine(elapsed1);
             //Console.Write(elapsed2);
             //Console.CursorTop -= 1;
-            //Console.CursorLeft = 10;
+            //Console.CursorLeft = 5;
 
-            //int diff = elapsed2a - elapsed1a;
-            //Console.Write("({0}{1})", diff < 0 ? "" : "+", diff);
-            //suma += diff;
+            //sum1 += elapsed1;
+            //sum2 += elapsed2;
             //count++;
-            //long avg = suma / count;
-            //Console.CursorLeft += 3;
-            //Console.WriteLine("({0}{1})", avg < 0 ? "" : "+", avg);
-            //Console.CursorLeft = 10;
-
-            //diff = elapsed2 - elapsed1;
-            //Console.Write("({0}{1})", diff < 0 ? "" : "+", diff);
-            //sum += diff;
-            //avg = sum / count;
-            //Console.CursorLeft += 3;
-            //Console.WriteLine("({0}{1})", avg < 0 ? "" : "+", avg);
-            //Console.WriteLine();
+            //long avg = sum1 / count;
+            //Console.WriteLine("({0})", avg);
+            //Console.CursorLeft = 5;
+            //avg = sum2 / count;
+            //Console.WriteLine("({0})", avg);
         }
         private void UpdateImage(Image img)
         {
             if (img == null)
             {
-                picOut.Image.Dispose();
+                if (picOut.Image != null)
+                    picOut.Image.Dispose();
                 picOut.Image = null;
                 return;
             }
