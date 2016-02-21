@@ -56,6 +56,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GameUnit_Bool.cs" />
+    <Compile Include="GameUnit_Bool_Draw.cs" />
+    <Compile Include="GameUnit_Bool_TurnCalculation.cs" />
     <Compile Include="IGameUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

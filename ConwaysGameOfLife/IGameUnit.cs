@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConwaysGameOfLife
 {
-    public interface IGameUnit<T>
+    public interface IGameUnit
     {
         Image Draw( Color foreground, Color background );
         void Play();

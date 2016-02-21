@@ -151,7 +151,7 @@
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.Size = new System.Drawing.Size(118, 26);
             this.txtHeight.TabIndex = 4;
-            this.txtHeight.Text = "1000";
+            this.txtHeight.Text = "1,000";
             this.txtHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtHeight.Leave += new System.EventHandler(this.CheckTextBoxes);
             // 
@@ -162,7 +162,7 @@
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(118, 26);
             this.txtWidth.TabIndex = 3;
-            this.txtWidth.Text = "1000";
+            this.txtWidth.Text = "1,000";
             this.txtWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtWidth.Leave += new System.EventHandler(this.CheckTextBoxes);
             // 
@@ -309,7 +309,7 @@
             this.trkSpeed.Size = new System.Drawing.Size(189, 34);
             this.trkSpeed.TabIndex = 14;
             this.trkSpeed.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trkSpeed.Value = 5;
+            this.trkSpeed.Value = 15;
             this.trkSpeed.Scroll += new System.EventHandler(this.trkSpeed_Scroll);
             // 
             // panel1
@@ -320,7 +320,7 @@
             this.panel1.Controls.Add(this.picOut);
             this.panel1.Location = new System.Drawing.Point(258, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(500, 514);
+            this.panel1.Size = new System.Drawing.Size(514, 514);
             this.panel1.TabIndex = 19;
             // 
             // Form1
@@ -330,7 +330,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.CancelButton = this.btnQuit;
-            this.ClientSize = new System.Drawing.Size(766, 553);
+            this.ClientSize = new System.Drawing.Size(780, 553);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

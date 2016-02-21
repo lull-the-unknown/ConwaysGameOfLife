@@ -17,10 +17,9 @@ namespace ConwaysGameOfLife
         private const int BaseSpeed = 1000;
 
         public GameState State = GameState.Stopped;
-        private IGameUnit<bool> game = null;
-        private long ticks = 0L;
-        private long sum1 = 0L;
-        private long sum2 = 0L;
+        private IGameUnit game = null;
+        private double sum_calc = 0L;
+        private double sum_draw = 0L;
         private long count = 0L;
         
         public Form1()
@@ -75,15 +74,15 @@ namespace ConwaysGameOfLife
             game = null;
             UpdateImage(null);
             State = GameState.Stopped;
+
+            Console.WriteLine("\n\n\n---Stopped---\n");
         }
 
         private void StartNewGame()
         {
-            ticks = 0L;
-            sum1 = 0L;
-            sum2 = 0L;
+            sum_calc = 0d;
+            sum_draw = 0d;
             count = 0L;
-            Console.Clear();
 
             GameUnitDesc unitDesc = new GameUnitDesc();
             Regex reg = new Regex("\\D+");
@@ -94,7 +93,7 @@ namespace ConwaysGameOfLife
             Console.WriteLine("Starting new game: width={0}, height={0}", unitDesc.Width, unitDesc.Height);
             game = new GameUnit_Bool(unitDesc);
             
-            //UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+            UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
         }
 
         private void CheckTextBoxes( object sender, EventArgs e )
@@ -156,32 +155,28 @@ namespace ConwaysGameOfLife
 
         private void timerGameTick_Tick(object sender, EventArgs e)
         {
-            //Console.WriteLine( "Timer tick, stopping timer" );
+            //Console.WriteLine("Timer tick, stopping timer");
             //timerGameTick.Enabled = false;
             if (game == null)
                 return;
-            //DateTime start = DateTime.Now;
+            DateTime start = DateTime.Now;
             game.Play();
-            //int elapsed1 = (int)(DateTime.Now - start).TotalMilliseconds;
-            //start = DateTime.Now;
-        
-        /**///UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
-            
-            //int elapsed2 = (int)(DateTime.Now - start).TotalMilliseconds;
-            //Console.WriteLine("{0}:", ticks++);
-            //Console.WriteLine(elapsed1);
-            //Console.Write(elapsed2);
-            //Console.CursorTop -= 1;
-            //Console.CursorLeft = 5;
+            double elapsed_calc = (DateTime.Now - start).TotalMilliseconds;
 
-            //sum1 += elapsed1;
-            //sum2 += elapsed2;
-            //count++;
-            //long avg = sum1 / count;
-            //Console.WriteLine("({0})", avg);
-            //Console.CursorLeft = 5;
-            //avg = sum2 / count;
-            //Console.WriteLine("({0})", avg);
+            start = DateTime.Now;
+            UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+            double elapsed_draw = (DateTime.Now - start).TotalMilliseconds;
+            
+            count++;
+            sum_calc += elapsed_calc;
+            double avg_calc = sum_calc / count;
+            Console.WriteLine("Calc:{0,8:N4}ms ({1,8:N4}ms)", elapsed_calc, avg_calc);
+            sum_draw += elapsed_draw;
+            double avg_Draw = sum_draw / count;
+            Console.WriteLine("Draw:{0,8:N4}ms ({1,8:N4}ms)", elapsed_draw, avg_Draw);
+            double totalTime = avg_calc + avg_Draw;
+            Console.WriteLine("Avg ms/turn={0:N4}m, FPS cap={1}fps", totalTime, (int)(1000/totalTime));
+            Console.CursorTop -= 3;
         }
         private void UpdateImage(Image img)
         {
