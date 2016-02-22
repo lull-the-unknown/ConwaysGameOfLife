@@ -17,11 +17,12 @@ namespace ConwaysGameOfLife
         private const int BaseSpeed = 1000;
 
         public GameState State = GameState.Stopped;
+        GameUnitDesc GameDesc = new GameUnitDesc();
         private IGameUnit game = null;
         private double sum_calc = 0L;
         private double sum_draw = 0L;
-        private long count = 0L;
-        
+        private long frameCount = 0L;
+
         public Form1()
         {
             InitializeComponent();
@@ -43,12 +44,11 @@ namespace ConwaysGameOfLife
                 grpGameUnit.Enabled = false;
                 btnEditBoard.Enabled = false;
 
-                State = GameState.Playing;
-
                 if (game == null)
                     StartNewGame();
 
                 timerGameTick.Enabled = true;
+                State = GameState.Playing;
             }
             else
             {
@@ -70,9 +70,11 @@ namespace ConwaysGameOfLife
             btnPlay.Focus();
             grpGameUnit.Enabled = true;
             btnEditBoard.Enabled = false;
+            hScrollBar1.Enabled = false;
+            vScrollBar1.Enabled = false;
 
             game = null;
-            UpdateImage(null);
+            ClearImage();
             State = GameState.Stopped;
 
             Console.WriteLine("\n\n\n---Stopped---\n");
@@ -82,30 +84,36 @@ namespace ConwaysGameOfLife
         {
             sum_calc = 0d;
             sum_draw = 0d;
-            count = 0L;
+            frameCount = 0L;
 
-            GameUnitDesc unitDesc = new GameUnitDesc();
+            GameDesc = new GameUnitDesc();
             Regex reg = new Regex("\\D+");
-            unitDesc.Width = int.Parse(reg.Replace(txtWidth.Text, string.Empty)) + 5;
-            unitDesc.Width -= unitDesc.Width % 10;
-            unitDesc.Height = int.Parse(reg.Replace(txtHeight.Text, string.Empty)) + 5;
-            unitDesc.Height -= unitDesc.Height % 10;
-            Console.WriteLine("Starting new game: width={0}, height={0}", unitDesc.Width, unitDesc.Height);
-            game = new GameUnit_Bool(unitDesc);
-            
-            UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+            GameDesc.Width = int.Parse(reg.Replace(txtWidth.Text, string.Empty));
+            GameDesc.Height = int.Parse(reg.Replace(txtHeight.Text, string.Empty));
+            Console.WriteLine("Starting new game: width={0}, height={0}", GameDesc.Width, GameDesc.Height);
+            game = new GameUnit_Bool(GameDesc, Color.DarkBlue, Color.MintCream);
+
+            hScrollBar1.Value = 0;
+            vScrollBar1.Value = 0;
+            hScrollBar1.Enabled = true;
+            vScrollBar1.Enabled = true;
+            UpdateScrollBars();
+
+            UpdateImage();
         }
 
-        private void CheckTextBoxes( object sender, EventArgs e )
+        private void CheckTextBoxes(object sender, EventArgs e)
         {
             TextBox txtSender = sender as TextBox;
             string text = txtSender.Text;
             if (text.IndexOf('.') >= 0)
                 text = text.Substring(0, text.IndexOf('.'));
             text = (new Regex("\\D+")).Replace(text, string.Empty);
-            if (text.Length < 1)
-                text = "0";
-            int result = int.Parse(text);
+            if (text.Length < 2)
+                text = "10";
+            int val = int.Parse(text) + 5;
+            val -= val % 10;
+            text = val.ToString();
             for (int x = text.Length - 3; x > 0; x -= 3)
             {
                 text = string.Format("{0},{1}", text.Substring(0, x), text.Substring(x));
@@ -116,8 +124,23 @@ namespace ConwaysGameOfLife
         private void trkZoom_Scroll(object sender, EventArgs e)
         {
             lblZoom.Text = string.Format("x{0}", trkZoom.Value);
+            UpdateScrollBars();
             if (game != null)
-                UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+                UpdateImage();
+        }
+
+        private void UpdateScrollBars()
+        {
+            int zoom = trkZoom.Value;
+            int overWidth = GameDesc.Width - picOut.Width / zoom;
+            int largeChange = Math.Max(10, overWidth / 10 / zoom);
+            hScrollBar1.Maximum = Math.Max(0, overWidth + largeChange + 10);
+            hScrollBar1.LargeChange = largeChange;
+
+            int overHeight = GameDesc.Height - picOut.Height / zoom;
+            largeChange = Math.Max(10, overHeight / 10 / zoom);
+            vScrollBar1.Maximum = Math.Max(0, overHeight + largeChange + 10);
+            vScrollBar1.LargeChange = largeChange;
         }
 
         private void trkSpeed_Scroll(object sender, EventArgs e)
@@ -164,31 +187,33 @@ namespace ConwaysGameOfLife
             double elapsed_calc = (DateTime.Now - start).TotalMilliseconds;
 
             start = DateTime.Now;
-            UpdateImage(game.Draw(Color.DarkBlue, Color.MintCream));
+            UpdateImage();
             double elapsed_draw = (DateTime.Now - start).TotalMilliseconds;
-            
-            count++;
+
+            frameCount++;
             sum_calc += elapsed_calc;
-            double avg_calc = sum_calc / count;
+            double avg_calc = sum_calc / frameCount;
             Console.WriteLine("Calc:{0,8:N4}ms ({1,8:N4}ms)", elapsed_calc, avg_calc);
             sum_draw += elapsed_draw;
-            double avg_Draw = sum_draw / count;
+            double avg_Draw = sum_draw / frameCount;
             Console.WriteLine("Draw:{0,8:N4}ms ({1,8:N4}ms)", elapsed_draw, avg_Draw);
             double totalTime = avg_calc + avg_Draw;
-            Console.WriteLine("Avg ms/turn={0:N4}m, FPS cap={1}fps", totalTime, (int)(1000/totalTime));
+            Console.WriteLine("Avg ms/turn={0:N4}m, FPS cap={1}fps", totalTime, (int)(1000 / totalTime));
             Console.CursorTop -= 3;
         }
-        private void UpdateImage(Image img)
-        {
-            if (img == null)
-            {
-                if (picOut.Image != null)
-                    picOut.Image.Dispose();
-                picOut.Image = null;
-                return;
-            }
 
+        private void ClearImage()
+        {
+            if (picOut.Image != null)
+                picOut.Image.Dispose();
+            picOut.Image = null;
+        }
+
+        private void UpdateImage()
+        {
             int zoom = trkZoom.Value;
+            Image img = game.Draw(hScrollBar1.Value, vScrollBar1.Value, picOut.Width / zoom, picOut.Height / zoom);
+
             if (zoom > 1)
             {
                 Image imgOld = img;
@@ -205,7 +230,9 @@ namespace ConwaysGameOfLife
             }
             else
             {
-                if (picOut.Image.Width != img.Width)
+                bool widthChanged = picOut.Image.Width != img.Width;
+                bool heightChanged = picOut.Image.Height != img.Height;
+                if (widthChanged || heightChanged)
                 {
                     picOut.Image.Dispose();
                     picOut.Image = img;
@@ -221,8 +248,47 @@ namespace ConwaysGameOfLife
 
         private void Form1_ClientSizeChanged(object sender, EventArgs e)
         {
-            panel1.Width = Math.Max(0, this.ClientSize.Width - 8 - panel1.Left);
-            panel1.Height = Math.Max(0, this.ClientSize.Height - 8 - panel1.Top);
+            //picOut.Width = Math.Max(0, this.ClientSize.Width - 11 - picOut.Left);
+            //picOut.Height = Math.Max(0, this.ClientSize.Height - 15 - picOut.Top);
+        }
+
+        private void picOut_MouseMove(object sender, MouseEventArgs e)
+        {
+            int new_x = picOut.Left + e.X + 20;
+            int max_x = this.ClientSize.Width - lblCellInfo.Width;
+            if (new_x > max_x)
+                new_x -= lblCellInfo.Width + 40;
+            lblCellInfo.Left = new_x;
+
+            int new_y = picOut.Top + e.Y + 20;
+            int max_y = this.ClientSize.Height - lblCellInfo.Height;
+            if (new_y > max_y)
+                new_y -= lblCellInfo.Height + 40;
+            lblCellInfo.Top = new_y;
+
+            lblCellInfo.Text = string.Format("Cell Info:\nx={0}\ny={1}\nt={2}", e.X / trkZoom.Value + hScrollBar1.Value, e.Y / trkZoom.Value + vScrollBar1.Value, frameCount);
+        }
+
+        private void picOut_MouseEnter(object sender, EventArgs e)
+        {
+            lblCellInfo.Visible = true;
+        }
+
+        private void picOut_MouseLeave(object sender, EventArgs e)
+        {
+            lblCellInfo.Visible = false;
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            toolTip1.SetToolTip(vScrollBar1, string.Format("top={0}", vScrollBar1.Value));
+            UpdateImage();
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            toolTip1.SetToolTip(hScrollBar1, string.Format("left={0}", hScrollBar1.Value));
+            UpdateImage();
         }
     }
 }
