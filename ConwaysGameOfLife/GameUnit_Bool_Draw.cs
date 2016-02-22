@@ -11,46 +11,36 @@ namespace ConwaysGameOfLife
 {
     public partial class GameUnit_Bool : IGameUnit
     {
-        public Image Draw(Color foreground, Color background)
+        public Image Draw(int x, int y, int width, int height)
         {
-            return Draw_1(foreground, background);
-            //Bitmap result = new Bitmap(51, 50, PixelFormat.Format24bppRgb);
-            //Graphics g = Graphics.FromImage(result);
-            //Rectangle rectLeft = new Rectangle(0, 0, 25, 50);
-            //Rectangle rectRight = new Rectangle(26, 0, 25, 50);
-
-            //Image subResult;
-            //DateTime start;
-            //double diff1;
-            //double diff2;
-            //count++;
-
-            //start = DateTime.Now;
-            //subResult = Draw_1(foreground, background);
-            //diff1 = (DateTime.Now - start).TotalMilliseconds;
-            //sum1 += diff1;
-            //g.DrawImage(subResult, rectLeft, rectLeft, GraphicsUnit.Pixel);
-            //subResult.Dispose();
-
-            //start = DateTime.Now;
-            //subResult = Draw_2(foreground, background);
-            //diff2 = (DateTime.Now - start).TotalMilliseconds;
-            //sum2 += diff2;
-            //g.DrawImage(subResult, rectRight, rectLeft, GraphicsUnit.Pixel);
-            //subResult.Dispose();
-
-            //double avg1 = sum1 / count;
-            //Console.WriteLine("1:{0,8:N4}ms ({1,8:N4}ms)", diff1, avg1);
-            //double avg2 = sum2 / count;
-            //Console.Write("2:{0,8:N4}ms ({1,8:N4}ms)", diff2, avg2);
-            //Console.WriteLine("  ({0}{1:N4}ms)", avg2 > avg1 ? "+" : "", avg2 - avg1);
-            //Console.WriteLine();
-            //return result;
+            return Draw_1(x, y, width, height);
         }
 
-        public Image Draw_1(Color foreground, Color background)
+        public Image Draw_1(int x, int y, int width, int height)
         {
-            Bitmap result = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
+            if (x < 0)
+                x = 0;
+            if (x >= this.m_Width)
+                x = (this.m_Width - 1);
+            int xStop = x + width;
+            if (xStop > this.m_Width)
+            {
+                xStop = this.m_Width;
+                width = xStop - x;
+            }
+
+            if (y < 0)
+                y = 0;
+            if (y >= this.m_Height)
+                y = (this.m_Height - 1);
+            int yStop = y + height;
+            if (yStop > this.m_Height)
+            {
+                yStop = this.m_Height;
+                height = yStop - y;
+            }
+
+            Bitmap result = new Bitmap(width+2, height+2, PixelFormat.Format24bppRgb);
 
             // for using bitmapdata to write pixels efficiently:
             //    https://msdn.microsoft.com/en-us/library/5ey6h79d(v=vs.110).aspx
@@ -69,13 +59,13 @@ namespace ConwaysGameOfLife
             // Copy the RGB values into the array. (if there were any)
             //System.Runtime.InteropServices.Marshal.Copy(ptrDataStart, rgbValues, 0, dataLength);
 
-            Parallel.For(0, Height, delegate (int line)
+            Parallel.For(y, yStop, delegate (int line)
             {
                 Color selectedColor;
-                int pixelIndex = line * stride;
-                for (int pixel = 0; pixel < Width; pixel++)
+                int pixelIndex = (line - y + 1) * stride + 3;
+                for (int pixel = x; pixel < xStop; pixel++)
                 {
-                    selectedColor = currentBoard[pixel, line] ? foreground : background;
+                    selectedColor = currentBoard[pixel, line] ? ForeGround : BackGround;
                     rgbValues[pixelIndex++] = selectedColor.B;
                     rgbValues[pixelIndex++] = selectedColor.G;
                     rgbValues[pixelIndex++] = selectedColor.R;

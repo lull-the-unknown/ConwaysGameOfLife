@@ -18,7 +18,7 @@ namespace ConwaysGameOfLife
             //double diff2;
             //count++;
 
-            if (Width < 500 && Height < 500)
+            if (m_Width < 500 && m_Height < 500)
             {
                 //start = DateTime.Now;
                 CalculateNextTurn_Whole();
@@ -54,8 +54,8 @@ namespace ConwaysGameOfLife
         public void CalculateNextTurn_Async()
         {
             int count = 10;
-            int sizeX = Width / count;
-            int sizeY = Height / count;
+            int sizeX = m_Width / count;
+            int sizeY = m_Height / count;
 
             Parallel.For(0, count, delegate (int x)
             {
@@ -124,9 +124,9 @@ namespace ConwaysGameOfLife
             int y1;
             int y2;
             byte neighborCount;
-            for (int x = 0; x < Width; x++)
+            for (int x = 0; x < m_Width; x++)
             {
-                for (int y = 0; y < Height; y++)
+                for (int y = 0; y < m_Height; y++)
                 {
                     neighborCount = 0;
                     y0 = yIndicies[y];
@@ -165,7 +165,7 @@ namespace ConwaysGameOfLife
 
         public void CommitTurn()
         {
-            Array.Copy(nextBoard, currentBoard, Width * Height);
+            Array.Copy(nextBoard, currentBoard, m_Width * m_Height);
         }
     }
 }

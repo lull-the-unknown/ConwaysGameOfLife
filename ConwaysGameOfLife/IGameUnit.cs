@@ -9,7 +9,7 @@ namespace ConwaysGameOfLife
 {
     public interface IGameUnit
     {
-        Image Draw( Color foreground, Color background );
+        Image Draw( int x, int y, int width, int height );
         void Play();
     }
 

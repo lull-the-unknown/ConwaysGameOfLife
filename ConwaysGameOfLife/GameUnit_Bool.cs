@@ -11,8 +11,12 @@ namespace ConwaysGameOfLife
 {
     public partial class GameUnit_Bool : IGameUnit
     {
-        private int Width;
-        private int Height;
+        private int m_Width;
+        //public int Width {  get { return m_Width; } }
+        private int m_Height;
+        //public int Height { get { return m_Height; } }
+        private Color ForeGround;
+        private Color BackGround;
         private bool[,] currentBoard;
         private bool[,] nextBoard;
         private int[] xIndicies;
@@ -22,24 +26,27 @@ namespace ConwaysGameOfLife
         private double sum2 = 0d;
         private int count = 0;
 
-        public GameUnit_Bool(GameUnitDesc desc)
+        public GameUnit_Bool(GameUnitDesc desc, Color foreGround, Color backGround)
         {
-            Width = desc.Width;
-            Height = desc.Height;
-            currentBoard = new bool[Width, Height];
-            nextBoard = new bool[Width, Height];
+            ForeGround = foreGround;
+            BackGround = backGround;
+            
+            m_Width = desc.Width;
+            m_Height = desc.Height;
+            currentBoard = new bool[m_Width, m_Height];
+            nextBoard = new bool[m_Width, m_Height];
 
-            xIndicies = new int[Width + 2];
-            xIndicies[0] = Width - 1;
-            for (int x = 0; x < Width; x++)
+            xIndicies = new int[m_Width + 2];
+            xIndicies[0] = m_Width - 1;
+            for (int x = 0; x < m_Width; x++)
                 xIndicies[x + 1] = x;
-            xIndicies[Width + 1] = 0;
+            xIndicies[m_Width + 1] = 0;
 
-            yIndicies = new int[Height + 2];
-            yIndicies[0] = Height - 1;
-            for (int y = 0; y < Height; y++)
+            yIndicies = new int[m_Height + 2];
+            yIndicies[0] = m_Height - 1;
+            for (int y = 0; y < m_Height; y++)
                 yIndicies[y + 1] = y;
-            yIndicies[Height + 1] = 0;
+            yIndicies[m_Height + 1] = 0;
 
             Random rand = new Random();
             //for (int x = 0; x < Width; x++)
@@ -50,10 +57,10 @@ namespace ConwaysGameOfLife
             //        //currentBoard[x, y] = (rand.Next(10) < 3); // 30% chance cell starts alive
             //    }
             //}
-            int numGliders = Math.Max(1, Width * Height / 100) + 1;
+            int numGliders = Math.Max(1, m_Width * m_Height / 100) + 1;
             numGliders = rand.Next(1, numGliders);
             for (int x = 0; x < numGliders; x++)
-                DrawGlider(rand.Next(0, Width - 2), rand.Next(0, Height - 2), rand.Next(0, 4));
+                DrawGlider(rand.Next(0, m_Width - 2), rand.Next(0, m_Height - 2), rand.Next(0, 4));
             //DrawGlider(0, 0, 0);
         }
 

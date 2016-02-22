@@ -44,7 +44,6 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
             this.btnEditBoard = new System.Windows.Forms.Button();
-            this.picOut = new System.Windows.Forms.PictureBox();
             this.trkZoom = new System.Windows.Forms.TrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblZoom = new System.Windows.Forms.Label();
@@ -52,20 +51,23 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblSpeed = new System.Windows.Forms.Label();
             this.trkSpeed = new System.Windows.Forms.TrackBar();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.picOut = new System.Windows.Forms.PictureBox();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.lblCellInfo = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.grpGameUnit.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).BeginInit();
-            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picOut)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 33);
+            this.label1.Location = new System.Drawing.Point(20, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 20);
             this.label1.TabIndex = 0;
@@ -81,11 +83,11 @@
             this.grpGameUnit.Controls.Add(this.txtWidth);
             this.grpGameUnit.Controls.Add(this.label3);
             this.grpGameUnit.Controls.Add(this.label2);
-            this.grpGameUnit.Location = new System.Drawing.Point(15, 15);
-            this.grpGameUnit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.grpGameUnit.Location = new System.Drawing.Point(6, 7);
+            this.grpGameUnit.Margin = new System.Windows.Forms.Padding(0);
             this.grpGameUnit.Name = "grpGameUnit";
             this.grpGameUnit.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpGameUnit.Size = new System.Drawing.Size(237, 289);
+            this.grpGameUnit.Size = new System.Drawing.Size(237, 288);
             this.grpGameUnit.TabIndex = 1;
             this.grpGameUnit.TabStop = false;
             this.grpGameUnit.Text = "Game Unit";
@@ -188,7 +190,7 @@
             // 
             // btnPlay
             // 
-            this.btnPlay.Location = new System.Drawing.Point(15, 311);
+            this.btnPlay.Location = new System.Drawing.Point(6, 298);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(75, 38);
             this.btnPlay.TabIndex = 9;
@@ -199,7 +201,7 @@
             // btnStop
             // 
             this.btnStop.Enabled = false;
-            this.btnStop.Location = new System.Drawing.Point(96, 311);
+            this.btnStop.Location = new System.Drawing.Point(87, 298);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(75, 38);
             this.btnStop.TabIndex = 10;
@@ -210,7 +212,7 @@
             // btnQuit
             // 
             this.btnQuit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnQuit.Location = new System.Drawing.Point(177, 311);
+            this.btnQuit.Location = new System.Drawing.Point(168, 298);
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(75, 38);
             this.btnQuit.TabIndex = 11;
@@ -221,23 +223,12 @@
             // btnEditBoard
             // 
             this.btnEditBoard.Enabled = false;
-            this.btnEditBoard.Location = new System.Drawing.Point(15, 355);
+            this.btnEditBoard.Location = new System.Drawing.Point(6, 342);
             this.btnEditBoard.Name = "btnEditBoard";
             this.btnEditBoard.Size = new System.Drawing.Size(237, 38);
             this.btnEditBoard.TabIndex = 12;
             this.btnEditBoard.Text = "Edit Game Board";
             this.btnEditBoard.UseVisualStyleBackColor = true;
-            // 
-            // picOut
-            // 
-            this.picOut.BackColor = System.Drawing.Color.White;
-            this.picOut.Location = new System.Drawing.Point(0, 0);
-            this.picOut.Margin = new System.Windows.Forms.Padding(0);
-            this.picOut.Name = "picOut";
-            this.picOut.Size = new System.Drawing.Size(100, 100);
-            this.picOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picOut.TabIndex = 13;
-            this.picOut.TabStop = false;
             // 
             // trkZoom
             // 
@@ -256,7 +247,7 @@
             // 
             this.groupBox1.Controls.Add(this.lblZoom);
             this.groupBox1.Controls.Add(this.trkZoom);
-            this.groupBox1.Location = new System.Drawing.Point(15, 399);
+            this.groupBox1.Location = new System.Drawing.Point(6, 386);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(237, 68);
             this.groupBox1.TabIndex = 15;
@@ -282,7 +273,7 @@
             // 
             this.groupBox2.Controls.Add(this.lblSpeed);
             this.groupBox2.Controls.Add(this.trkSpeed);
-            this.groupBox2.Location = new System.Drawing.Point(15, 473);
+            this.groupBox2.Location = new System.Drawing.Point(6, 460);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(237, 68);
             this.groupBox2.TabIndex = 18;
@@ -312,16 +303,55 @@
             this.trkSpeed.Value = 15;
             this.trkSpeed.Scroll += new System.EventHandler(this.trkSpeed_Scroll);
             // 
-            // panel1
+            // picOut
             // 
-            this.panel1.AutoScroll = true;
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.picOut);
-            this.panel1.Location = new System.Drawing.Point(258, 27);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(514, 514);
-            this.panel1.TabIndex = 19;
+            this.picOut.BackColor = System.Drawing.Color.White;
+            this.picOut.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picOut.Location = new System.Drawing.Point(252, 7);
+            this.picOut.Margin = new System.Windows.Forms.Padding(0);
+            this.picOut.Name = "picOut";
+            this.picOut.Size = new System.Drawing.Size(500, 500);
+            this.picOut.TabIndex = 13;
+            this.picOut.TabStop = false;
+            this.picOut.MouseEnter += new System.EventHandler(this.picOut_MouseEnter);
+            this.picOut.MouseLeave += new System.EventHandler(this.picOut_MouseLeave);
+            this.picOut.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picOut_MouseMove);
+            // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Enabled = false;
+            this.hScrollBar1.LargeChange = 1;
+            this.hScrollBar1.Location = new System.Drawing.Point(252, 507);
+            this.hScrollBar1.Maximum = 0;
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(500, 21);
+            this.hScrollBar1.TabIndex = 19;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Enabled = false;
+            this.vScrollBar1.Location = new System.Drawing.Point(752, 7);
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(21, 500);
+            this.vScrollBar1.TabIndex = 20;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
+            // 
+            // lblCellInfo
+            // 
+            this.lblCellInfo.AutoSize = true;
+            this.lblCellInfo.BackColor = System.Drawing.SystemColors.Info;
+            this.lblCellInfo.Location = new System.Drawing.Point(513, 158);
+            this.lblCellInfo.Name = "lblCellInfo";
+            this.lblCellInfo.Size = new System.Drawing.Size(70, 20);
+            this.lblCellInfo.TabIndex = 21;
+            this.lblCellInfo.Text = "Cell Info";
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 5000;
+            this.toolTip1.InitialDelay = 0;
+            this.toolTip1.ReshowDelay = 100;
             // 
             // Form1
             // 
@@ -330,8 +360,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.CancelButton = this.btnQuit;
-            this.ClientSize = new System.Drawing.Size(780, 553);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(780, 539);
+            this.Controls.Add(this.lblCellInfo);
+            this.Controls.Add(this.vScrollBar1);
+            this.Controls.Add(this.hScrollBar1);
+            this.Controls.Add(this.picOut);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnEditBoard);
@@ -347,13 +380,11 @@
             this.ClientSizeChanged += new System.EventHandler(this.Form1_ClientSizeChanged);
             this.grpGameUnit.ResumeLayout(false);
             this.grpGameUnit.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkZoom)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picOut)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -375,7 +406,6 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.Button btnEditBoard;
-        private System.Windows.Forms.PictureBox picOut;
         private System.Windows.Forms.TrackBar trkZoom;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblZoom;
@@ -383,8 +413,12 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.TrackBar trkSpeed;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.CheckBox chkWrapEdges;
+        private System.Windows.Forms.PictureBox picOut;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.Label lblCellInfo;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
